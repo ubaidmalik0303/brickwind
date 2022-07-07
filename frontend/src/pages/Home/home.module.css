@@ -1,0 +1,180 @@
+.hero {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner {
+  background: url("../../assets/shop3_banner1.jpg");
+  background-position: right;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* animation: fadeOut 10s linear infinite alternate; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+@keyframes fadeOut {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.content {
+  margin: 130px 0 0 150px;
+}
+
+.content > h2 {
+  font-family: "Splash", cursive;
+  color: grey;
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.content > h3:nth-child(2) {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  letter-spacing: 8px;
+  font-weight: 700;
+}
+
+.content > h3:nth-child(3) {
+  font-family: "Poppins", sans-serif;
+  font-size: 90px;
+  line-height: 0.7;
+  font-weight: 700;
+}
+
+.content > p {
+  font-size: 20;
+  font-weight: 700;
+  line-height: 4;
+}
+
+.content > p > span {
+  background-color: white;
+  padding: 5px;
+  font-size: 32px;
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+.shopbycategory > h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  margin: 40px 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.shopbycategorycard > h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  margin: 20px 0 0 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.shopbycategorycard > span {
+  color: grey;
+  font-size: 10px;
+  text-align: center;
+}
+
+.shopby {
+  background-color: #f4f4f4;
+  margin: 60px 0 40px 0;
+}
+
+.shopbycard {
+  background-color: white;
+  height: 500px;
+  width: 300px;
+  padding: 40px;
+  display: inline-block;
+  background: url("../../assets/shop3_banner1.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.shopbycardcircle::after {
+  content: "";
+  background-color: white;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.shopbycardcirclebottom::after{
+  bottom: -130px;
+  right: -90px;
+}
+
+.shopbycardcircletop{
+  background-position: center;
+}
+
+.shopbycardcircletop::after{
+  top: -130px;
+  left: -80px;
+}
+
+.shopbycard > h3 {
+  font-size: 26px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -2px;
+  font-weight: 700;
+  position: relative;
+  z-index: 5;
+}
+
+.shopbycard > p {
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  color: rgb(119, 119, 119);
+  font-weight: 200;
+  margin: 10px 0 20px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.propularproducts h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 60px 0 40px 0;
+}
+
+.ourServices h3 {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: black;
+}
+
+.ourServices p {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: rgb(119, 119, 119);
+  line-height: 10px;
+}
+
+.ourServices div {
+  font-size: 14px;
+  font-weight: 200;
+  font-family: "Poppins", sans-serif;
+  color: rgb(119, 119, 119);
+  line-height: 20px;
+}

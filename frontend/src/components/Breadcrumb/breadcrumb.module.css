@@ -1,0 +1,18 @@
+.breadcrumb {
+  background-color: rgb(238, 236, 236);
+  text-align: center;
+  padding: 80px 0;
+}
+
+.breadcrumb span {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  word-spacing: 5px;
+}
+
+.breadcrumb h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  margin-top: 10px;
+}

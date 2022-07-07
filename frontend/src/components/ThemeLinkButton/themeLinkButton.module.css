@@ -1,0 +1,16 @@
+.themelinkbutton{
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  font-weight: 900;
+  background-color: #34383e;
+  border: none;
+  outline: none;
+  padding: 20px 40px;
+  transition: all 0.3s linear;
+}
+
+.themelinkbutton:hover{
+    color: white;
+    background-color: #33363bda;
+}
