@@ -7,7 +7,7 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 const Signup = () => {
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb name="SIGNUP" breadcrumbpath={"> Signup"} />
       <div className={`container-fluid ${SignupStyles.signup}`}>
         <div className="container py-5">
           <div className="row justify-content-center">

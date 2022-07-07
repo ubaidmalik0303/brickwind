@@ -1,0 +1,129 @@
+.wishlist h1 {
+  font-size: 32px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+.wishlist table {
+  min-width: 100%;
+}
+
+.wishlist table > thead {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.wishlist table > thead > tr > th {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.wishlist table > tbody > tr {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.wishlist table > tbody > tr > td {
+  padding: 20px 10px;
+}
+
+.wishlist table tbody > tr > td > div {
+  position: relative;
+  display: inline-block;
+}
+
+.wishlist table > tbody > tr > td > div > img {
+  width: 100px;
+  height: 100px;
+}
+
+.wishlist table > tbody > tr > td > div > svg {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px 2px rgb(230, 230, 230);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.wishlist table > tbody > tr > td > p {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.wishlist table > tbody > tr > td > span {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+.wishlist table > tbody > tr > td > a {
+  color: black;
+  background-color: rgb(221, 220, 220);
+  outline: none;
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  font-size: 14px;
+  transition: all 200ms linear;
+}
+
+.wishlist table > tbody > tr > td > a:hover {
+  background-color: black;
+  color: white;
+}
+
+.wishlist table > tbody > tr > td > button {
+  color: white;
+  background-color: black;
+  outline: none;
+  border: none;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  font-size: 14px;
+  margin-left: 10px;
+  transition: all 200ms linear;
+}
+
+.wishlist table > tbody > tr > td > button:hover {
+  background-color: rgb(46, 45, 45);
+}
+
+@media screen and (max-width: 850px) {
+
+    .wishlist h1{
+        font-size: 25px;
+    }
+
+  .wishlist table > thead {
+    display: none;
+  }
+
+  .wishlist table > tbody > tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(218, 218, 218);
+    border-top: 5px solid black;
+  }
+
+  .wishlist table > tbody > tr > td:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .wishlist table > tbody > tr > td:last-child > a{
+    text-align: center;
+  }
+
+  .wishlist table > tbody > tr > td:last-child > button{
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}

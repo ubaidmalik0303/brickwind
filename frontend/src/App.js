@@ -7,11 +7,13 @@ import Signup from "./pages/Signup/Signup";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Cart from "./pages/Cart/Cart";
 import Wishlist from "./pages/Wishlist/Wishlist";
+import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate/ScrollToTopOnNavigate";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTopOnNavigate />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

@@ -6,7 +6,7 @@ import LoginStyle from "./login.module.css";
 const Login = () => {
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb name="LOGIN" breadcrumbpath="> Login" />
       <div className={`container-fluid ${LoginStyle.login}`}>
         <div className="container py-5">
           <div className="row justify-content-center">
@@ -16,7 +16,7 @@ const Login = () => {
                 <input type="email" placeholder="Enter Your Email" />
                 <input type="password" placeholder="Enter Your Password" />
                 <Link to="/forgotpassword">Forgot Password?</Link>
-                <input type="submit" value="Login" />
+                <input type="submit" value="Sign In" />
               </form>
               <Link to="/signup">Register New Account</Link>
             </div>

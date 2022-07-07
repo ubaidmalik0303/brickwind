@@ -1,13 +1,15 @@
 import React from "react";
 import BreadcrumbStyles from "./breadcrumb.module.css";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ breadcrumbpath, name }) => {
   return (
     <>
-      <div className="container-fluid pt-5 pb-4 border-bottom"></div>
+      <div className="container-fluid border-bottom" style={{ height: 80 }}></div>
       <div className={`container-fluid ${BreadcrumbStyles.breadcrumb}`}>
-        <span><b>Home</b> {">"} Wishlist</span>
-        <h1>Wishlist</h1>
+        <span>
+          <b>Home</b> {breadcrumbpath && breadcrumbpath}
+        </span>
+        <h1>{name && name}</h1>
       </div>
     </>
   );
