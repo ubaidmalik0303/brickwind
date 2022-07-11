@@ -9,7 +9,6 @@ import {
   FiHeart,
   FiArrowDown,
   FiMenu,
-  FiLogIn,
 } from "react-icons/fi";
 import DropDownImage from "../../assets/headphone-3.jpg";
 import MobileNavbar from "./MobileNavbar";
@@ -52,7 +51,7 @@ const Header = () => {
             <li><Link to="/">HOME</Link></li>
             <li><Link to="/about">ABOUT</Link></li>
             <li>
-              <Link to="/">STORE</Link> <FiArrowDown size={15} />
+              <Link to="/store">STORE</Link> <FiArrowDown size={15} />
               <div className={`${headerStyles.dropdown} shadow`}>
                 <div>
                   <ul>
