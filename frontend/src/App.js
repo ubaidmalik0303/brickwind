@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
@@ -10,8 +11,16 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import Store from "./pages/Store/Store";
 import Search from "./pages/Search/Search";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate/ScrollToTopOnNavigate";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { loadUser } from "./store/Actions/UserActions";
+import store from "./store";
+import MyAccount from "./pages/MyAccoubnt/MyAccount";
 
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <>
       <Router>
@@ -24,8 +33,11 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="forgotpassword" element={<ForgotPassword />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="wishlist" element={<Wishlist />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="my-account" element={<MyAccount />} />
+            </Route>
           </Route>
         </Routes>
       </Router>

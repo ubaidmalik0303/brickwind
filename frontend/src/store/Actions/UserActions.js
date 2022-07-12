@@ -12,8 +12,7 @@ import {
   LOGOUT_FAIL,
   CLEAR_ERROR,
 } from "../Constants/UserConstants";
-import axios from "axios";
-import { axiosInstance } from "../../utils/axiosInstance";
+import { axiosInstance } from "../../utils/AxiosInstance";
 
 //Login
 export const login = (email, password) => async (dispatch) => {
@@ -32,6 +31,7 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: data.user,
     });
+    console.log(data)
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
@@ -47,7 +47,11 @@ export const register = (userData) => async (dispatch) => {
 
     const config = { headers: { "Content-type": "multipart/form-data" } };
 
-    const { data } = await axiosInstance.post("api/v1/register", userData, config);
+    const { data } = await axiosInstance.post(
+      "api/v1/register",
+      userData,
+      config
+    );
 
     dispatch({
       type: REGISTER_SUCCESS,

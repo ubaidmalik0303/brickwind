@@ -1,10 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SignupStyles from "./signup.module.css";
 import { Link } from "react-router-dom";
 import DummyMan from "../../assets/dummyman.png";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import { useNavigate } from "react-router-dom";
+import { register, clearErrors } from "../../store/Actions/UserActions";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const { name, email, password } = user;
+  const [avatar, setAvatar] = useState();
+  const [avatarPreview, setAvatarPreview] = useState(DummyMan);
+
+  const registerDataChange = (e) => {
+    if (e.target.name === "avatar") {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
+
+  const registerSubmit = (e) => {
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("password", password);
+    myForm.set("avatar", avatar);
+
+    dispatch(register(myForm));
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (isAuthenticated) {
+      navigate("/my-account");
+    }
+  }, [dispatch, error, alert, isAuthenticated, navigate]);
+
   return (
     <>
       <Breadcrumb name="SIGNUP" breadcrumbpath={"> Signup"} />
@@ -13,13 +69,37 @@ const Signup = () => {
           <div className="row justify-content-center">
             <div className="col-md-6 shadow px-4 py-5">
               <h2>Register Account</h2>
-              <form action="">
-                <input type="text" placeholder="Enter Your Full Name" />
-                <input type="email" placeholder="Enter Your Email" />
-                <input type="password" placeholder="Enter Your Password" />
-                <img src={DummyMan} />
-                <input type="file" accept="image/*" />
-                <input type="submit" value="Signup" />
+              <form onSubmit={registerSubmit} encType="multipart/form-data">
+                <input
+                  onChange={registerDataChange}
+                  type="text"
+                  name="name"
+                  placeholder="Enter Your Full Name"
+                />
+                <input
+                  onChange={registerDataChange}
+                  type="email"
+                  name="email"
+                  placeholder="Enter Your Email"
+                />
+                <input
+                  onChange={registerDataChange}
+                  type="password"
+                  name="password"
+                  placeholder="Enter Your Password"
+                />
+                <img src={avatarPreview} alt="Profile Pricture" />
+                <input
+                  onChange={registerDataChange}
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                />
+                <input
+                  type="submit"
+                  value="Signup"
+                  disabled={loading ? true : false}
+                />
               </form>
               <Link to="/login">Already Have Account?</Link>
             </div>
