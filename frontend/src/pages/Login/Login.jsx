@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { login, clearErrors } from "../../store/Actions/UserActions";
-import { TailSpin } from "react-loader-spinner";
+import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,37 +41,34 @@ const Login = () => {
         <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-md-6 shadow px-4 py-5">
-              <h2>Login</h2>
-              <form onSubmit={loginSubmit}>
-                {loading ? (
-                  <TailSpin
-                    height="100"
-                    width="100"
-                    color="grey"
-                    ariaLabel="loading"
-                  />
-                ) : (
-                  <>
-                    <input
-                      type="email"
-                      placeholder="Enter Your Email"
-                      required
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      placeholder="Enter Your Password"
-                      required
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                    />
-                    <Link to="/forgotpassword">Forgot Password?</Link>
-                    <input type="submit" value="Sign In" />
-                  </>
-                )}
-              </form>
-              <Link to="/signup">Register New Account</Link>
+              {loading ? (
+                <SpinnerLoader />
+              ) : (
+                <>
+                  <h2>Login</h2>
+                  <form onSubmit={loginSubmit}>
+                    <>
+                      <input
+                        type="email"
+                        placeholder="Enter Your Email"
+                        required
+                        value={loginEmail}
+                        onChange={(e) => setLoginEmail(e.target.value)}
+                      />
+                      <input
+                        type="password"
+                        placeholder="Enter Your Password"
+                        required
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                      />
+                      <Link to="/forgotpassword">Forgot Password?</Link>
+                      <input type="submit" value="Sign In" />
+                    </>
+                  </form>
+                  <Link to="/signup">Register New Account</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

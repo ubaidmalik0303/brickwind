@@ -104,10 +104,10 @@ const Header = () => {
           <Link className="mx-1" to="/login">
             <FiUser color="black" size={30} />
           </Link>
-          <Link className="mx-1" to="/wishlist">
+          <Link className="mx-1" to="/my-account/wishlist">
             <FiHeart color="black" size={30} />
           </Link>
-          <Link className="mx-1" to="/cart">
+          <Link className="mx-1" to="/my-account/cart">
             <FiShoppingBag color="black" size={30} />
           </Link>
         </div>

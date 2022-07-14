@@ -10,7 +10,7 @@ const cloudnary = require("cloudinary");
 exports.userRegister = catchAsyncError(async (req, res, next) => {
   const myCloud = await cloudnary.v2.uploader.upload(req.body.avatar, {
     folder: "avatars",
-    width: 150,
+    width: 250,
     crop: "scale",
   });
 
@@ -46,7 +46,6 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Invalid Email or Password", 401));
   }
   sendToken(res, 200, user);
-  
 });
 
 //Logout USer
@@ -159,11 +158,11 @@ exports.updateUserPassword = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Old Password Is Incorrect", 400));
   }
 
-  if (req.body.newPassword !== req.body.confirmPassword) {
+  if (req.body.newPassword !== req.body.confirmNewPassword) {
     return next(new ErrorHandler("Password Does Not Match", 400));
   }
 
-  user.password = req.body.newPassword;
+  user.password = req.body.confirmNewPassword;
 
   user.save();
 
@@ -177,7 +176,23 @@ exports.updateUserProfile = catchAsyncError(async (req, res, next) => {
     email: req.body.email,
   };
 
-  //Cloud update later
+  if (req.body.avatar !== "") {
+    const user = await User.findById(req.user.id);
+    const imageId = user.avatar.public_id;
+
+    await cloudnary.v2.uploader.destroy(imageId);
+
+    const myCloud = await cloudnary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 250,
+      crop: "scale",
+    });
+
+    userNewDetails.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
 
   const user = await User.findByIdAndUpdate(req.user.id, userNewDetails, {
     new: true,

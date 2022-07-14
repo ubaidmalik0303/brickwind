@@ -7,7 +7,6 @@ import {
   PRODUCT_DETAILS_FAIL,
   CLEAR_ERROR,
 } from "../Constants/ProductConstants";
-import axios from "axios";
 import { axiosInstance } from "../../utils/axiosInstance";
 
 //Get All Products

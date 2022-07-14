@@ -8,7 +8,7 @@ import { FiX } from "react-icons/fi";
 const Wishlist = () => {
   return (
     <>
-      <Breadcrumb name="WISHLIST" breadcrumbpath="> My Account > Wishlist" />
+      <Breadcrumb name="WISHLIST" breadcrumbpath=" > Wishlist" />
       <div className={`container-fluid ${WishlistStyles.wishlist} p-3 p-md-5`}>
           <h1 className="mt-4 mb-5">My Wishlist</h1>
           <table>

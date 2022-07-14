@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { register, clearErrors } from "../../store/Actions/UserActions";
+import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -63,45 +64,47 @@ const Signup = () => {
 
   return (
     <>
-      <Breadcrumb name="SIGNUP" breadcrumbpath={"> Signup"} />
+      <Breadcrumb name="SIGNUP" breadcrumbpath={" > Signup"} />
       <div className={`container-fluid ${SignupStyles.signup}`}>
         <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-md-6 shadow px-4 py-5">
-              <h2>Register Account</h2>
-              <form onSubmit={registerSubmit} encType="multipart/form-data">
-                <input
-                  onChange={registerDataChange}
-                  type="text"
-                  name="name"
-                  placeholder="Enter Your Full Name"
-                />
-                <input
-                  onChange={registerDataChange}
-                  type="email"
-                  name="email"
-                  placeholder="Enter Your Email"
-                />
-                <input
-                  onChange={registerDataChange}
-                  type="password"
-                  name="password"
-                  placeholder="Enter Your Password"
-                />
-                <img src={avatarPreview} alt="Profile Pricture" />
-                <input
-                  onChange={registerDataChange}
-                  type="file"
-                  name="avatar"
-                  accept="image/*"
-                />
-                <input
-                  type="submit"
-                  value="Signup"
-                  disabled={loading ? true : false}
-                />
-              </form>
-              <Link to="/login">Already Have Account?</Link>
+              {loading ? (
+                <SpinnerLoader />
+              ) : (
+                <>
+                  <h2>Register Account</h2>
+                  <form onSubmit={registerSubmit} encType="multipart/form-data">
+                    <input
+                      onChange={registerDataChange}
+                      type="text"
+                      name="name"
+                      placeholder="Enter Your Full Name"
+                    />
+                    <input
+                      onChange={registerDataChange}
+                      type="email"
+                      name="email"
+                      placeholder="Enter Your Email"
+                    />
+                    <input
+                      onChange={registerDataChange}
+                      type="password"
+                      name="password"
+                      placeholder="Enter Your Password"
+                    />
+                    <img src={avatarPreview} alt="Profile Pricture" />
+                    <input
+                      onChange={registerDataChange}
+                      type="file"
+                      name="avatar"
+                      accept="image/*"
+                    />
+                    <input type="submit" value="Signup" />
+                  </form>
+                  <Link to="/login">Already Have Account?</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

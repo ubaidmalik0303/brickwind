@@ -1,0 +1,90 @@
+.myaccount > div{
+    position: relative;
+}
+
+.myaccount img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+}
+
+.myaccount h2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+.myaccount span {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+}
+
+.myaccount p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+.editaccountbtn {
+  outline: none;
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  margin: 20px 0;
+}
+
+.editaccountbtn:hover {
+  background-color: rgb(27, 27, 27);
+}
+
+.myordersbtn {
+  outline: none;
+  border: none;
+  background-color: grey;
+  color: white;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  margin: 0 10px 0 0;
+  text-decoration: none;
+  transition: all 300ms linear;
+}
+
+.editaccountbtn {
+  outline: none;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: all 300ms linear;
+}
+
+.myordersbtn:hover {
+  background-color: rgb(27, 27, 27);
+  color: white;
+}
+
+.editaccountbtn:hover {
+  background-color: black;
+  color: white;
+}
+
+.logoutbtn {
+  outline: none;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

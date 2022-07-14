@@ -1,0 +1,55 @@
+.editaccount h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: 30px;
+  }
+  
+  .editaccount form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .editaccount form > input {
+    margin: 15px 0;
+    border: none;
+    outline: none;
+    font-weight: 400;
+    background-color: rgb(240, 238, 238);
+    font-family: "Poppins", sans-serif;
+    height: 50px;
+    padding: 10px;
+  }
+  
+  .editaccount form > input[type="submit"] {
+    background-color: black;
+    color: white;
+    font-weight: 700;
+  }
+  
+  .editaccount form > img{
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 10px 0 0 0;
+  }
+  
+  .editaccount form > input[type="file"] {
+    background-color: white;
+    font-weight: 700;
+  }
+  
+  .changepasswordbtn {
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    color: white;
+    background-color: grey;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .changepasswordbtn:hover{
+    color: white;
+  }
+  

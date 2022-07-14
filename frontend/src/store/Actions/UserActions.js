@@ -10,9 +10,13 @@ import {
   LOAD_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
   CLEAR_ERROR,
 } from "../Constants/UserConstants";
 import { axiosInstance } from "../../utils/AxiosInstance";
+import { getAuthToken, saveAuthToken } from "../../utils/authTokenLocalStorage";
 
 //Login
 export const login = (email, password) => async (dispatch) => {
@@ -27,11 +31,12 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
+    saveAuthToken(data.token);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data.user,
     });
-    console.log(data)
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
@@ -53,6 +58,8 @@ export const register = (userData) => async (dispatch) => {
       config
     );
 
+    saveAuthToken(data.token);
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: data.user,
@@ -70,7 +77,11 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axiosInstance.get("api/v1/my-account");
+    const token = getAuthToken();
+
+    const { data } = await axiosInstance.get("api/v1/my-account", {
+      headers: { token: token },
+    });
 
     dispatch({
       type: LOAD_USER_SUCCESS,
@@ -87,12 +98,39 @@ export const loadUser = () => async (dispatch) => {
 //Logout
 export const logout = () => async (dispatch) => {
   try {
-    await axiosInstance.get("/api/v1/logout");
-
+    // await axiosInstance.get("/api/v1/logout");
+    localStorage.removeItem("token");
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,
+    });
+  }
+};
+
+//Forgot Password
+
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "multipart/json" },
+    };
+
+    const { data } = await axiosInstance.post(
+      "/api/v1/password/forgot",
+      email,
+      config
+    );
+
+    dispatch({
+      type: FORGOT_PASSWORD_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { AllProductReducer, ProductDetailsReducer } from "./ProductReducer";
-import { userReducer } from "./UserReducer";
+import { userReducer, forgotpasswordReducer } from "./UserReducer";
 import { profileReducer } from "./ProfileReducer";
 
 export default combineReducers({
@@ -8,4 +8,5 @@ export default combineReducers({
   product: ProductDetailsReducer,
   user: userReducer,
   profile: profileReducer,
+  forgotpassword: forgotpasswordReducer,
 });

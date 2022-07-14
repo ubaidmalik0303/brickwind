@@ -4,16 +4,17 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
-  const { token } = req.cookies;
+  const { token } = req.headers;
 
   if (!token) {
-    return next(new ErrorHandler("Please Login To Access And Modify Private Data"));
+    return next(
+      new ErrorHandler("Please Login To Access And Modify Private Data")
+    );
   }
 
   const decodedData = await jwt.verify(token, process.env.JWT_SECRET);
 
   req.user = await User.findById(decodedData.id);
-
 
   next();
 });

@@ -8,13 +8,19 @@ const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
-);
-app.use(fileUpload());
+  );
+  app.use(fileUpload());
+  app.use(cookieParser());
+
+app.use(function(req, Res, Next) {  
+  Res.header('Access-Control-Allow-Origin', req.headers.origin);
+  Res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  Next();
+});  
 
 //Routes Import
 const productRoute = require("./routes/productRoute");
