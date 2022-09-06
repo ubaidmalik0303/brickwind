@@ -1,0 +1,56 @@
+.order * {
+  font-family: "Poppins", sans-serif;
+}
+
+.order h2 {
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.shippinginfo h2 {
+  margin: 20px 0;
+}
+
+.shippinginfo p {
+  margin-left: 20px;
+  color: rgb(80, 79, 79);
+}
+
+.cartitems h2 {
+  margin: 50px 0 20px 0;
+}
+
+.ordersummary {
+  border-left: 1px solid rgb(184, 183, 183);
+}
+
+.ordersummary h2 {
+  margin: 10px 0 50px 0;
+}
+
+.ordersummary > div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px;
+}
+
+.ordersummary > div b {
+  font-weight: 500;
+}
+
+.ordersummary button{
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 10px 10px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+@media screen and (max-width: 768px) {
+  .ordersummary {
+    border-top: 1px solid rgb(184, 183, 183);
+    border-left: none;
+  }
+}

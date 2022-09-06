@@ -1,10 +1,22 @@
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apiFeatures");
+const fs = require("fs");
 
 //Create A Product  --Admin
 exports.createProduct = catchAsyncError(async (req, res, next) => {
+  const imagesLinks = [];
+
+  req.files.forEach((img) => {
+    imagesLinks.push({
+      public_id: img.filename,
+      url: "images/" + img.filename,
+    });
+  });
+
+  req.body.images = imagesLinks;
   req.body.createdBy = req.user.id;
 
   const product = await Product.create(req.body);
@@ -17,7 +29,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 
 //Get All Products
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-  const resultPerPage = 8;
+  const resultPerPage = 24;
   const productCount = await Product.countDocuments();
 
   const apiFeature = new ApiFeatures(Product.find(), req.query)
@@ -32,12 +44,28 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
 
   products = await apiFeature.query;
 
+  products.forEach((val) => {
+    val.images.forEach((element) => {
+      element.url = process.env.HOST_NAME + element.url;
+    });
+  });
+
   res.status(201).json({
     success: true,
     products,
     productCount,
     resultPerPage,
     filteredProductsCount,
+  });
+});
+
+//Get Admin Products
+exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(201).json({
+    success: true,
+    products,
   });
 });
 
@@ -48,6 +76,10 @@ exports.getProductDetails = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
   }
+
+  product.images.forEach((element) => {
+    element.url = process.env.HOST_NAME + element.url;
+  });
 
   res.header("Access-Control-Allow-Origin", "*").status(200).json({
     success: true,
@@ -64,6 +96,26 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
       success: false,
       msg: "Product Not Found",
     });
+  }
+
+  if (req.files[0]) {
+    product.images.forEach((element) => {
+      fs.unlink(`uploads/${element.public_id}`, function (err) {
+        if (err) throw err;
+        console.log("File deleted!");
+      });
+    });
+
+    const imagesLinks = [];
+
+    req.files.forEach((img) => {
+      imagesLinks.push({
+        public_id: img.filename,
+        url: "images/" + img.filename,
+      });
+    });
+
+    req.body.images = imagesLinks;
   }
 
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -89,6 +141,13 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     });
   }
 
+  product.images.forEach((element) => {
+    fs.unlink(`uploads/${element.public_id}`, function (err) {
+      if (err) throw err;
+      console.log("File deleted!");
+    });
+  });
+
   await product.remove();
 
   res.status(200).json({
@@ -99,7 +158,7 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
 
 //New Review And Update Review
 exports.reviewForProduct = catchAsyncError(async (req, res, next) => {
-  const { rating, comment, productId } = req.body;
+  const { rating, comment, productid } = req.body;
 
   const review = {
     user: req.user.id,
@@ -108,7 +167,7 @@ exports.reviewForProduct = catchAsyncError(async (req, res, next) => {
     comment,
   };
 
-  const product = await Product.findById(productId);
+  const product = await Product.findById(productid);
 
   const isReviewed = product.reviews.find((rev) => {
     return rev.user.toString() === req.user._id.toString();
@@ -135,6 +194,14 @@ exports.reviewForProduct = catchAsyncError(async (req, res, next) => {
   product.ratings = avg / product.reviews.length;
 
   await product.save({ validateBeforeSave: false });
+
+  const user = await User.findById(req.user._id);
+  user?.purchasedItems?.forEach((val, i) => {
+    if (val.product.toString() === productid) {
+      val.isReviewed = true;
+    }
+  });
+  await user.save();
 
   res.status(200).json({
     success: true,

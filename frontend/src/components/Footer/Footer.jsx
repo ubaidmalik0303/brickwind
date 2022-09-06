@@ -1,13 +1,17 @@
 import React from "react";
 import FooterStyles from "./footer.module.css";
-import { FiFacebook, FiInstagram, FiTwitter } from "react-icons/fi";
+import {
+  FaFacebook,
+  FaPinterest,
+  FaInstagram,
+  FaTwitter,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <>
-      <div className="container-fluid">
-        <hr className="mx-5" />
+    <div className={FooterStyles.bglightblack}>
+      <div className={`container-fluid`}>
         <div className="container">
           <div className={`${FooterStyles.newsSheltter}`}>
             <div>
@@ -15,38 +19,51 @@ const Footer = () => {
               <p>Get all the latest information on Events, Sales and Offers.</p>
             </div>
             <div>
-              <input type="email" placeholder="email address..." />
+              <input type="email" placeholder="Email Address" />
               <input type="button" value="SUBSCRIBE" />
             </div>
             <div className="py-5">
-              <FiFacebook />
-              <FiTwitter />
-              <FiInstagram />
+              <a href="https://www.facebook.com/brickwindllc">
+                <FaFacebook />
+              </a>
+              <a href="https://www.pinterest.com/brickwindllc/">
+                <FaPinterest />
+              </a>
+              <a href="https://www.instagram.com/brickwind.llc/">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com/brickwind">
+                <FaTwitter />
+              </a>
             </div>
           </div>
         </div>
       </div>
+      <hr className="text-white mx-5" />
       <footer className={`container-fluid ${FooterStyles.footer}`}>
-        <hr className="mx-5 mb-5" />
         <div className="row px-5">
           <div className="col-lg-3 col-sm-6 p-3">
-            <h3>BRICKWICK</h3>
-            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus laudantium quaerat, quam ratione explicabo voluptatem eligendi consequuntur, dicta facere sint laboriosam aperiam sed dignissimos eum beatae non? Natus, nihil inventore!</span>
+            <h3>BRICKWIND</h3>
+            <span>
+              We have our very own fleet of delivery vans. Your order will be
+              packed with care at our warehouse and delivered right to your door
+              by our friendly BrickWind team.
+            </span>
           </div>
           <div className="col-lg-2 col-sm-3 p-3">
             <h3>MY ACCOUNT</h3>
             <ul>
               <li>
-                <Link to="/">PROFILE</Link>
+                <Link to="/my-account">PROFILE</Link>
               </li>
               <li>
-                <Link to="/">CART</Link>
+                <Link to="/my-account/cart">CART</Link>
               </li>
               <li>
-                <Link to="/">WISHLIST</Link>
+                <Link to="/my-account/wishlist">WISHLIST</Link>
               </li>
               <li>
-                <Link to="/">MY ORDERS</Link>
+                <Link to="/my-account/my-orders">MY ORDERS</Link>
               </li>
             </ul>
           </div>
@@ -57,19 +74,19 @@ const Footer = () => {
                 <Link to="/">HOME</Link>
               </li>
               <li>
-                <Link to="/">PRODUCTS</Link>
+                <Link to="/store">STORE</Link>
               </li>
               <li>
-                <Link to="/">ABOUT US</Link>
+                <Link to="/about">ABOUT US</Link>
               </li>
               <li>
-                <Link to="/">CONTACT</Link>
+                <Link to="/contact">CONTACT</Link>
               </li>
               <li>
-                <Link to="/">LOGIN</Link>
+                <Link to="/login">LOGIN</Link>
               </li>
               <li>
-                <Link to="/">SIGNUP</Link>
+                <Link to="/signup">SIGNUP</Link>
               </li>
             </ul>
           </div>
@@ -79,34 +96,34 @@ const Footer = () => {
               <div className="col-md-6">
                 <strong>ADDRESS:</strong>
                 <br />
-                <span>1234 Street Name, City, England</span>
+                <span>30 N Gould St Ste 25404, Sheridan, Wyoming, 82801</span>
               </div>
               <div className="col-md-6">
                 <strong>PHONE:</strong>
                 <br />
-                <span>{"(123) 456-7890"}</span>
+                <a href="tel:+16826518211">{"+1 682 651 8211"}</a>
               </div>
               <div className="col-md-6">
                 <strong>EMAIL:</strong>
                 <br />
-                <span>mail@example.com</span>
+                <a href="mailto:sales@brickwind.com">sales@brickwind.com</a>
               </div>
               <div className="col-md-6">
                 <strong>WORKING DAYS/HOURS:</strong>
                 <br />
-                <span>Mon - Sun / 9:00 AM - 8:00 PM</span>
+                <span>Mon - Fri / 9:00 AM - 5:00 PM</span>
               </div>
             </div>
           </div>
         </div>
-        <hr className="mx-5" />
+        <hr className="mx-5 text-white" />
         <div
-          className={`container-fluid px-5 py-4 ${FooterStyles.footerBottom}`}
+          className={`container-fluid px-5 pb-4 pt-2 ${FooterStyles.footerBottom}`}
         >
-          <span>BrickWick eCommerce. © 2022. All Rights Reserved</span>
+          <span>BrickWind eCommerce. © 2022. All Rights Reserved</span>
         </div>
       </footer>
-    </>
+    </div>
   );
 };
 

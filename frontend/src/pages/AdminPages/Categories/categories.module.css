@@ -1,0 +1,57 @@
+.categories * {
+  font-family: "Poppins", sans-serif;
+}
+
+.categories {
+  width: 100%;
+}
+
+.categories h2 {
+  font-weight: 700;
+}
+
+.categories a {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.categories table {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.categories table thead {
+  border-bottom: 1px solid grey;
+  background-color: black;
+}
+
+.categories table thead {
+  position: sticky;
+  top: 0;
+}
+
+.categories table thead tr th {
+  border-right: 1px solid grey;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.categories table tbody > tr:nth-child(even) {
+  background-color: rgb(219, 215, 215);
+}
+
+.categories table > tbody > tr > td {
+  font-weight: 300;
+  padding: 10px;
+  border-right: 1px solid grey;
+}
+
+.categories table > tbody > tr > td > table td {
+  font-weight: 300;
+  padding: 10px;
+}

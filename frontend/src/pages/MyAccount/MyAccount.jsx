@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../store/Actions/UserActions";
 
 const MyAccount = () => {
-  const { loading, user } = useSelector((state) => state.user);
+  const { loading, user, isAdmin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -16,19 +16,27 @@ const MyAccount = () => {
 
   return (
     <>
-      <Breadcrumb name="MY ACCOUNT"/>
+      <Breadcrumb name="MY ACCOUNT" />
       <div className={`container-fluid py-5 ${MyAccountStyles.myaccount}`}>
         {loading ? (
           <h1>Loading</h1>
         ) : (
           <div className="container text-center">
+            {isAdmin && (
+              <Link to="/admin" className={MyAccountStyles.toadminbtn}>
+                Dashboard
+              </Link>
+            )}
             <button
               onClick={handleLogout}
               className={MyAccountStyles.logoutbtn}
             >
               Logout
             </button>
-            <img src={user.avatar.url} alt={user.name} />
+            <img
+              src={user?.avatar ? user.avatar.url : DummyMan}
+              alt={user.name}
+            />
             <br />
             <h2>{user.name}</h2>
             <span>Email: {user.email}</span>

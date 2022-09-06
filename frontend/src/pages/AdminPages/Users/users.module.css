@@ -1,0 +1,86 @@
+.users * {
+  font-family: "Poppins", sans-serif;
+}
+
+.users {
+  width: 100%;
+}
+
+.users h2{
+  font-weight: 700;
+}
+
+.users table {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.users table thead {
+  border-bottom: 1px solid grey;
+  background-color: black;
+}
+
+.users table thead {
+  position: sticky;
+  top: 0;
+}
+
+.users table thead tr th {
+  border-right: 1px solid grey;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.users table tbody tr:nth-child(even) {
+  background-color: rgb(219, 215, 215);
+}
+
+.users table tbody tr td {
+  font-weight: 300;
+  padding: 10px;
+  border-right: 1px solid grey;
+}
+
+.users table tbody tr td select{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 1px solid black;
+}
+
+.usersoptions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.usersoptions > form {
+  display: flex;
+  margin: 0 10px;
+}
+
+.usersoptions > form input {
+  outline: none;
+  border: none;
+  background-color: white;
+  border-bottom: 2px solid black;
+  padding: 0 5px;
+  height: 50px;
+}
+
+.usersoptions a {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.userdeletebtn{
+  outline: none;
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px;
+}

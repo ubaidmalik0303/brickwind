@@ -1,0 +1,27 @@
+.shppingdetails h1 {
+  font-weight: 700;
+  margin: 50px 0 0 0;
+  text-align: center;
+}
+
+.shppingdetails form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.shppingdetails form input,
+select {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid black;
+  padding: 10px;
+  background-color: rgb(238, 235, 235);
+  margin-bottom: 15px;
+}
+
+.shppingdetails form input[type="submit"] {
+  background-color: black;
+  color: white;
+  border: none;
+}

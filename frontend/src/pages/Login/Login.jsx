@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <>
-      <Breadcrumb name="LOGIN" breadcrumbpath="> Login" />
+      <Breadcrumb name="LOGIN" breadcrumbpath=" > Login" auth="no" />
       <div className={`container-fluid ${LoginStyle.login}`}>
         <div className="container py-5">
           <div className="row justify-content-center">

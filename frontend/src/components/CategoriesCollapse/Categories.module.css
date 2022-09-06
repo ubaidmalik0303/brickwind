@@ -1,0 +1,13 @@
+.categories * {
+  font-family: "Poppins", sans-serif;
+}
+
+.categories .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoriescollapse .head span {
+  color: black;
+}

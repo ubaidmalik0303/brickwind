@@ -40,7 +40,11 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <Breadcrumb name="FORGOT PASSWORD" breadcrumbpath="> Forgot Password" />
+      <Breadcrumb
+        name="FORGOT PASSWORD"
+        breadcrumbpath=" > Forgot Password"
+        auth="no"
+      />
       <div className={`container-fluid ${ForgotPasswordStyles.forgotpassword}`}>
         <div className="container py-5">
           <div className="row justify-content-center">
@@ -55,6 +59,7 @@ const ForgotPassword = () => {
                       type="email"
                       name="email"
                       placeholder="Enter Your Email"
+                      value={email}
                       required
                       onChange={(e) => setEmail(e.target.value)}
                     />

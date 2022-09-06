@@ -1,0 +1,91 @@
+.adminproducts * {
+  font-family: "Poppins", sans-serif;
+}
+
+.adminproducts {
+  width: 100%;
+}
+
+.adminproducts h2{
+  font-weight: 700;
+}
+
+.adminproducts table {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.adminproducts table thead {
+  border-bottom: 1px solid grey;
+  background-color: black;
+}
+
+.adminproducts table thead{
+    position: sticky;
+    top: 0;
+}
+
+.adminproducts table thead tr th {
+  border-right: 1px solid grey;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adminproducts table tbody tr:nth-child(even){
+    background-color: rgb(219, 215, 215);
+}
+
+.adminproducts table tbody tr td{
+    font-weight: 300;
+    padding: 10px;
+    border-right: 1px solid grey;
+}
+
+.adminproductsoptions{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.adminproductsoptions > form{
+  display: flex;
+  margin: 0 10px;
+}
+
+.adminproductsoptions > form input{
+  outline: none;
+  border: none;
+  background-color: white;
+  border-bottom: 2px solid black;
+  padding: 0 5px;
+}
+
+.adminproductsoptions a{
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.editproductbtn{
+  background-color: grey;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.editproductbtn:hover{
+  color: white;
+}
+
+.deleteproductbtn{
+  background-color: black;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+}

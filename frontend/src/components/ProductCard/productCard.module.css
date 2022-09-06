@@ -1,11 +1,18 @@
-.productCardLink{
-    text-decoration: none;
+.productCardLink {
+  text-decoration: none;
 }
 
-.productCard{
-    width: 180px;
-    overflow: hidden;
-    margin: 0 auto;
+.productCard {
+  width: 180px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 2px 2px 10px 1px rgb(233, 232, 232);
+  transform: scale(1);
+  transition: transform 300ms linear;
+}
+
+.productCard:hover{
+  transform: scale(1.05);
 }
 
 .productCard > .upperBody {
@@ -28,13 +35,13 @@
   transition: all 200ms linear;
 }
 
-.rightArrow{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 100%;
+.rightArrow {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 100%;
 }
 
 .productCard > div > div > button {
@@ -52,29 +59,50 @@
   transition: all 200ms linear;
 }
 
-.productCard:hover > div > div > button, .productCard:hover > div > .hoverCard{
-    opacity: 1;
-    visibility: visible;
+.productCard:hover > div > div > button,
+.productCard:hover > div > .hoverCard {
+  opacity: 1;
+  visibility: visible;
 }
 
-.productCard > span{
-    font-size: 10px;
-    color: rgb(119, 119, 119);
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    text-transform: uppercase;
+.productCard > div > span {
+  font-size: 10px;
+  color: rgb(119, 119, 119);
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
-.productCard > h3{
-    font-size: 15px;
-    color: black;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    text-transform: uppercase;
+.productCard > h3 {
+  font-size: 15px;
+  color: black;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  word-break: break-all;
 }
 
-.price{
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    color: black !important;
+.price {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: black !important;
+}
+
+@media screen and (max-width: 450px) {
+  .productCard {
+    width: 150px;
+  }
+
+  .productCard > .upperBody {
+    height: 150px;
+  }
+
+  .productCard > .upperBody > img {
+    height: 150px;
+    width: 150px;
+  }
+
+  .productCard > h3 {
+    font-size: 12px;
+  }
 }

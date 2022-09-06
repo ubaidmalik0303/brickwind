@@ -1,0 +1,15 @@
+.reviewcard * {
+  font-family: "Poppins", sans-serif;
+}
+
+.reviewcard {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgb(238, 238, 238);
+  padding: 10px;
+}
+
+.reviewcard span {
+  color: rgb(114, 113, 113);
+  font-weight: 400;
+}

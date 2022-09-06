@@ -13,6 +13,15 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
+  LIST_ALL_USERS_REQUEST,
+  LIST_ALL_USERS_SUCCESS,
+  LIST_ALL_USERS_FAIL,
+  CHANGE_USER_ROLE_REQUEST,
+  CHANGE_USER_ROLE_SUCCESS,
+  CHANGE_USER_ROLE_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
   CLEAR_ERROR,
 } from "../Constants/UserConstants";
 import { axiosInstance } from "../../utils/AxiosInstance";
@@ -109,7 +118,6 @@ export const logout = () => async (dispatch) => {
 };
 
 //Forgot Password
-
 export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
@@ -131,6 +139,84 @@ export const forgotPassword = (email) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Get All Users
+export const getAllusers = () => async (dispatch) => {
+  try {
+    dispatch({ type: LIST_ALL_USERS_REQUEST });
+
+    const token = getAuthToken();
+
+    const { data } = await axiosInstance.get("api/v1/admin/users", {
+      headers: { token: token },
+    });
+
+    dispatch({
+      type: LIST_ALL_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: LIST_ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Change User Role
+export const changeUserRole = (id, role) => async (dispatch) => {
+  try {
+    dispatch({ type: CHANGE_USER_ROLE_REQUEST });
+
+    const token = getAuthToken();
+    const config = {
+      headers: { "Content-type": "application/json", token },
+    };
+
+    const { data } = await axiosInstance.put(
+      `api/v1/admin/user/${id}`,
+      role,
+      config
+    );
+
+    dispatch({
+      type: CHANGE_USER_ROLE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: CHANGE_USER_ROLE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Delete User
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+
+    const token = getAuthToken();
+    const config = {
+      headers: { token },
+    };
+
+    const { data } = await axiosInstance.delete(
+      `api/v1/admin/user/${id}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_USER_FAIL,
       payload: error.response.data.message,
     });
   }

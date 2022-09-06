@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import 'react-multi-carousel/lib/styles.css';
 
 const options = {
   timeout: 5000,

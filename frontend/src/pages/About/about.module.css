@@ -1,0 +1,13 @@
+.about h2, .about p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.about p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  text-align: center;
+  margin: 20px auto;
+}

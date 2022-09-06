@@ -1,125 +1,219 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeStyles from "./home.module.css";
-import ImageDummy from "../../assets/headphone-3.jpg";
 import ThemeLinkButton from "../../components/ThemeLinkButton/ThemeLinkButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import Carousel from "react-multi-carousel";
 import {
   FiHeadphones,
   FiCreditCard,
   FiTruck,
   FiCornerUpLeft,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import { clearErrors, getProducts } from "../../store/Actions/ProductActions";
+import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import CategoriesCollapse from "../../components/CategoriesCollapse/CategoriesCollapse";
+
 
 const Home = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { loading, products, error } = useSelector((state) => state.products);
+  const {
+    loading: catLoading,
+    categories,
+    error: catError,
+  } = useSelector((state) => state.categories);
+
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (catError) {
+      alert.error(catError);
+      dispatch(clearErrors());
+    }
+
+    dispatch(getProducts());
+  }, [dispatch, error, alert, catError]);
+
   return (
     <>
-      <div className={HomeStyles.hero}>
+      <Helmet title="BrickWind" />
+      <div className={`${HomeStyles.hero} w-100`}>
+        <div className={HomeStyles.tarnsparent}></div>
         <div className={HomeStyles.banner}>
           <div className={HomeStyles.content}>
-            <h2>Winter Fashion Trends</h2>
+            <h2>Home & Kitchen trends</h2>
             <h3>GET UPTO 30% OFF</h3>
-            <h3>on Jackets</h3>
-            <p>
+            <h3>on Cutlery</h3>
+            <p style={{ color: "white" }}>
               STARTING AT{" "}
-              <span>
-                $199<sup>99</sup>
+              <span style={{ color: "black" }}>
+                $10<sup>99</sup>
               </span>
             </p>
-            <ThemeLinkButton title="SHOP NOW" link="/" />
+            <ThemeLinkButton title="SHOP NOW" link="/store/Home & Kitchen" />
           </div>
         </div>
       </div>
 
       <div className={`container-fluid ${HomeStyles.shopbycategory}`}>
         <h2>SHOP BY CATEGORY</h2>
-        <div className="row py-2 px-5">
-          {[0, 0, 0, 0, 0, 0].map((val, i) => {
-            return (
-              <div
-                key={i}
-                className={`col-md-2 text-center p-3 ${HomeStyles.shopbycategorycard}`}
-              >
-                <img src={ImageDummy} alt="" width={180} />
-                <h3>ELECTRONICS</h3>
-                <span>8 PRODUCTS</span>
-              </div>
-            );
-          })}
+        <div className="py-2 px-5">
+          {catLoading ? (
+            <SpinnerLoader />
+          ) : (
+            <Carousel responsive={responsive}>
+              {categories?.map((val, i) => {
+                return (
+                  <div
+                    className={`text-center p-3 ${HomeStyles.shopbycategorycard}`}
+                    key={i}
+                  >
+                    <Link to={`store/${val.name}`}>
+                      <div style={{ position: "relative" }}>
+                        <div className={HomeStyles.categoryimagehover}></div>
+                        <img
+                          src={val.image.url}
+                          alt=""
+                          width={180}
+                          height={180}
+                        />
+                      </div>
+                      <h3>{val.name}</h3>
+                    </Link>
+                  </div>
+                );
+              })}
+            </Carousel>
+          )}
         </div>
       </div>
 
       <div className={`container-fluid py-5 ${HomeStyles.shopby}`}>
         <div className="row py-4">
-          <div className="col-lg-3 col-sm-6">
+          <div className="col-lg-3 col-md-6 p-3">
             <div
               className={`${HomeStyles.shopbycard} ${HomeStyles.shopbycardcircle} ${HomeStyles.shopbycardcirclebottom}`}
-              style={{ justifyContent: "flex-end" }}
+              style={{
+                justifyContent: "flex-end",
+                background:
+                  "url('https://media.istockphoto.com/photos/wooden-chairs-at-table-in-bright-open-space-interior-with-lamp-next-picture-id968086564?k=20&m=968086564&s=612x612&w=0&h=dlB2NThpsLZliGMy_RAdjESDjFtgMgLWZjQnG_CchOM=')",
+              }}
             >
-              <h3>HomeDecor Trends</h3>
+              <h3>Furniture Trends</h3>
               <p>See all and find yours</p>
               <ThemeLinkButton
-                title="Shop By Home-Decor"
-                link="/"
+                title="Shop By Furniture"
+                link="/store/Home & Kicthen/Furniture"
                 style={{
                   padding: "15px 30px",
                   fontSize: 14,
                   position: "relative",
                   zIndex: 5,
+                  textAlign: "center",
                 }}
               />
             </div>
           </div>
-          <div className="col-lg-3 col-sm-6">
+          <div className="col-lg-3 col-md-6 p-3">
             <div
               className={`${HomeStyles.shopbycard} ${HomeStyles.shopbycardcircle} ${HomeStyles.shopbycardcircletop}`}
+              style={{
+                background:
+                  "url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/greer-interior-1529347631.jpg')",
+              }}
             >
-              <h3>HomeDecor Trends</h3>
+              <h3>Kitchen & Dining Trends</h3>
               <p>See all and find yours</p>
               <ThemeLinkButton
-                title="Shop By Home-Decor"
-                link="/"
+                title="Shop By Kitchen & Dining"
+                link="/store/Home & Kicthen/Kitchen & Dining"
                 style={{
-                  padding: "15px 30px",
+                  padding: "15px 10px",
                   fontSize: 14,
                   position: "relative",
                   zIndex: 5,
+                  textAlign: "center",
                 }}
               />
             </div>
           </div>
-          <div className="col-lg-3 col-sm-6">
+          <div className="col-lg-3 col-md-6 p-3">
             <div
               className={`${HomeStyles.shopbycard} ${HomeStyles.shopbycardcircle} ${HomeStyles.shopbycardcirclebottom}`}
-              style={{ justifyContent: "flex-end" }}
+              style={{
+                justifyContent: "flex-end",
+                background:
+                  "url('https://images.unsplash.com/photo-1616046229478-9901c5536a45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aG9tZSUyMGRlY29yfGVufDB8fDB8fA%3D%3D&w=1000&q=80')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             >
-              <h3>HomeDecor Trends</h3>
+              <h3>Home Decor Trends</h3>
               <p>See all and find yours</p>
               <ThemeLinkButton
                 title="Shop By Home-Decor"
-                link="/"
+                link="/store/Home & Kicthen/Home Decor"
                 style={{
                   padding: "15px 30px",
                   fontSize: 14,
                   position: "relative",
                   zIndex: 5,
+                  textAlign: "center",
                 }}
               />
             </div>
           </div>
-          <div className="col-lg-3 col-sm-6">
+          <div className="col-lg-3 col-md-6 p-3">
             <div
               className={`${HomeStyles.shopbycard} ${HomeStyles.shopbycardcircle} ${HomeStyles.shopbycardcircletop}`}
+              style={{
+                background:
+                  "url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/holiday-decor-small-space-06-1505838978.jpg?crop=1xw:1xh;center,top&resize=480:*')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             >
-              <h3>HomeDecor Trends</h3>
+              <h3>Seasonal Decor Trends</h3>
               <p>See all and find yours</p>
               <ThemeLinkButton
-                title="Shop By Home-Decor"
-                link="/"
+                title="Shop By Seasonal Decor"
+                link="/store/Home & Kicthen/Seasonal Decor"
                 style={{
-                  padding: "15px 30px",
+                  padding: "15px 10px",
                   fontSize: 14,
                   position: "relative",
                   zIndex: 5,
+                  textAlign: "center",
                 }}
               />
             </div>
@@ -128,15 +222,20 @@ const Home = () => {
       </div>
 
       <div className={`container-fluid ${HomeStyles.propularproducts}`}>
-        <h2 className="text-center">POPULAR PRODUCTS</h2>
+        <h2 className="text-center">LATEST PRODUCTS</h2>
         <div className="row">
-          {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((val, i) => {
-            return (
-              <div key={i} className="col-xl-2 col-md-3 col-sm-4 col-6 py-2">
-                <ProductCard />
-              </div>
-            );
-          })}
+          {loading ? (
+            <SpinnerLoader />
+          ) : (
+            products &&
+            products.map((val, i) => {
+              return (
+                <div key={i} className="col-xl-2 col-md-3 col-sm-4 col-6 py-4">
+                  <ProductCard data={val} />
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -152,9 +251,9 @@ const Home = () => {
               <h3>CUSTOMER SUPPORT</h3>
               <p>Need Assistence?</p>
               <div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                voluptate provident maxime rerum laboriosam? Eveniet magni qui
-                nesciunt
+                We are here 24/7 to assist you. Our cutsomer support
+                representative will response you as soon as possible. Call now
+                or contact via email.
               </div>
             </div>
             <div className="col-md-3 col-sm-6 p-4">
@@ -162,9 +261,8 @@ const Home = () => {
               <h3>SECURED PAYMENT</h3>
               <p>Safe & Fast</p>
               <div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                voluptate provident maxime rerum laboriosam? Eveniet magni qui
-                nesciunt
+                We integrated secure payment process to make sure our customer
+                privacy more safe and easy.
               </div>
             </div>
             <div className="col-md-3 col-sm-6 p-4">
@@ -172,9 +270,8 @@ const Home = () => {
               <h3>FREE RETURNS</h3>
               <p>Easy & Free</p>
               <div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                voluptate provident maxime rerum laboriosam? Eveniet magni qui
-                nesciunt
+                If you are not happy with what you buy don't worry you can
+                return easily and we will pay you full refund.
               </div>
             </div>
             <div className="col-md-3 col-sm-6 p-4">
@@ -182,9 +279,8 @@ const Home = () => {
               <h3>FREE SHIPPING</h3>
               <p>Orders Over $99</p>
               <div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                voluptate provident maxime rerum laboriosam? Eveniet magni qui
-                nesciunt
+                We provide free shipping service to our customers on order above
+                $99
               </div>
             </div>
           </div>

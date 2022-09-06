@@ -1,12 +1,72 @@
-.storepath {
-  font-size: 12px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  margin-left: 30px;
+.shopsidebar {
+  position: sticky;
+  top: 70px;
 }
 
-.Collapsible__trigger {
-  font-size: 12px !important;
-  font-family: "Poppins", sans-serif !important;
-  font-weight: 500 !important;
+.categorylist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categorylist li {
+  margin: 8px 0;
+}
+
+.categorylist li a {
+  text-decoration: none;
+  color: black;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.showmorebtn {
+  background-color: black;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  margin: 30px auto 20px auto;
+}
+
+.paginationcontainer {
+  display: flex;
+  justify-content: center;
+  margin: 6vmax;
+}
+
+/* .pagination{
+  display: flex;
+  justify-content: center;
+  padding: 0;
+} */
+
+.paginationitem:first-child .paginationlink{
+  border-radius: 5px 0 0 5px;
+}
+
+.paginationitem:last-child .paginationlink{
+  border-radius: 0 5px 5px 0;
+}
+
+.paginationlink{
+  color: black;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 1px solid black;
+}
+
+.paginationlink:hover{
+  color: white;
+  background-color: black;
+}
+
+.paginationlinkactive{
+  background-color: black;
+  color: white;
 }

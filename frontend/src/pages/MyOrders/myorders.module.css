@@ -1,0 +1,128 @@
+.myorders * {
+  font-family: "Poppins", sans-serif;
+}
+
+.myorders div h4 {
+  font-weight: 500;
+}
+
+.myorders div a {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.myorders h1 {
+  font-size: 32px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+.myorders table {
+  min-width: 100%;
+}
+
+.myorders table > thead {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.myorders table > thead > tr > th {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.myorders table > tbody > tr {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.myorders table > tbody > tr > td {
+  padding: 20px 10px;
+}
+
+.myorders table tbody > tr > td > div {
+  position: relative;
+  display: inline-block;
+}
+
+.myorders table > tbody > tr > td > div > img {
+  width: 100px;
+  height: 100px;
+}
+
+.myorders table > tbody > tr > td > div > svg {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px 2px rgb(230, 230, 230);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.myorders table > tbody > tr > td > p {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.myorders table > tbody > tr > td > span {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+.mobileheading {
+  color: rgb(167, 167, 167);
+  font-size: 10px !important;
+  font-weight: 300 !important;
+  font-family: "Poppins", sans-serif;
+  display: none;
+}
+
+.orderstatusgreen{
+  color: green;
+}
+
+.orderstatusred{
+  color: red;
+}
+
+@media screen and (max-width: 850px) {
+  .myorders h1 {
+    font-size: 25px;
+  }
+
+  .myorders table > thead {
+    display: none;
+  }
+
+  .myorders table > tbody > tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(218, 218, 218);
+    border-top: 5px solid black;
+    margin-bottom: 20px;
+  }
+
+  .myorders table > tbody > tr > td:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .myorders table > tbody > tr > td:last-child > a {
+    text-align: center;
+  }
+
+  .myorders table > tbody > tr > td:last-child > button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .mobileheading {
+    display: block;
+  }
+}

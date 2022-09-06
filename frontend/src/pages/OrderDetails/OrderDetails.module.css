@@ -1,0 +1,35 @@
+.orderdetails * {
+  font-family: "Poppins", sans-serif;
+}
+
+.orderdetails h1 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.shippinginfo,
+.payment,
+.orderstatus,
+.orderitems {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+}
+
+.orderstatusred {
+  color: red;
+}
+
+.orderstatusgreen {
+  color: green;
+}
+
+.orderitems a {
+  text-decoration: none;
+  color: black;
+}
+
+.orderitem {
+  display: flex;
+  margin: 10px 0;
+}

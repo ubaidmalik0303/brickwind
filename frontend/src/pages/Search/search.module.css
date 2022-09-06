@@ -32,3 +32,8 @@
 .blankheight {
   height: 200px;
 }
+
+.search h2{
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}

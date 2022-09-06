@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import headerStyles from "./header.module.css";
-import Logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import {
   FiSearch,
   FiUser,
   FiShoppingBag,
   FiHeart,
-  FiArrowDown,
+  FiChevronsDown,
   FiMenu,
+  FiChevronsUp,
 } from "react-icons/fi";
-import DropDownImage from "../../assets/headphone-3.jpg";
 import MobileNavbar from "./MobileNavbar";
+import BrickWindLogo from "../../assets/brickwind-logo.png";
+import {
+  allCategories,
+  clearErrors,
+} from "../../store/Actions/CategoryActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
 const Header = () => {
   const [stickyHeader, setStickyHeader] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [scrollToTop, setScrollToTop] = useState(false);
+  const [currentCatIndex, setCurrentCatIndex] = useState(0);
+
+  const alert = useAlert();
+
+  const dispatch = useDispatch();
+  const { loading, categories, error } = useSelector(
+    (state) => state.categories
+  );
 
   window.onscroll = () => {
     if (window.scrollY >= 60) {
@@ -23,6 +39,12 @@ const Header = () => {
     }
     if (window.scrollY < 60) {
       setStickyHeader(false);
+    }
+    if (window.scrollY >= window.innerHeight) {
+      setScrollToTop(true);
+    }
+    if (window.scrollY < window.innerHeight) {
+      setScrollToTop(false);
     }
   };
 
@@ -35,57 +57,115 @@ const Header = () => {
     }
   };
 
+  const scrollToTopFunc = () => {
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    dispatch(allCategories());
+  }, [dispatch, error]);
+
   return (
     <>
-      <MobileNavbar isShow={showMobileNav} showFunc={handleShowMobileNavbar} />
+      <div
+        className={`${headerStyles.scrolltotopbtn} ${
+          scrollToTop ? headerStyles.showscrollbtn : ""
+        }`}
+        onClick={scrollToTopFunc}
+      >
+        <FiChevronsUp color="white" size={20} />
+      </div>
+      <MobileNavbar
+        isShow={showMobileNav}
+        setIsShow={setShowMobileNav}
+        showFunc={handleShowMobileNavbar}
+        categories={categories}
+      />
       <header
         className={`${headerStyles.header} ${
-          stickyHeader ? headerStyles.stickyheader : ""
+          stickyHeader
+            ? headerStyles.stickyheader + " " + headerStyles.bglightblack
+            : ""
         }`}
       >
         <div>
-          <img src={Logo} alt="" width={120} />
+          <Link to="/">
+            <img
+              className={headerStyles.logoimg}
+              src={BrickWindLogo}
+              alt="BrickWind"
+            />
+          </Link>
         </div>
         <div className={headerStyles.navbar}>
           <ul>
-            <li><Link to="/">HOME</Link></li>
-            <li><Link to="/about">ABOUT</Link></li>
             <li>
-              <Link to="/store">STORE</Link> <FiArrowDown size={15} />
+              <Link to="/">HOME</Link>
+            </li>
+            <li>
+              <Link to="/about">ABOUT</Link>
+            </li>
+            <li>
+              <Link to="/store">STORE</Link> <FiChevronsDown size={15} />
               <div className={`${headerStyles.dropdown} shadow`}>
-                <div>
-                  <ul>
-                    <li>CATEGORIES</li>
-                    <li>LAPTOPS</li>
-                    <li>ELECTRONICS</li>
-                    <li>LAPTOPS</li>
-                    <li>MOTORCYCLE</li>
-                    <li>LAPTOPS</li>
-                    <li>MOTORCYCLE</li>
-                    <li>LAPTOPS</li>
-                  </ul>
-                </div>
-                <div>
-                  <ul>
-                    <li>SUB-CATEGORIES</li>
-                    <li>LAPTOPS</li>
-                    <li>ELECTRONICS</li>
-                    <li>LAPTOPS</li>
-                    <li>MOTORCYCLE</li>
-                    <li>LAPTOPS</li>
-                    <li>LAPTOPS</li>
-                    <li>ELECTRONICS</li>
-                    <li>LAPTOPS</li>
-                    <li>MOTORCYCLE</li>
-                    <li>LAPTOPS</li>
-                  </ul>
-                </div>
-                <div>
-                  <img src={DropDownImage} alt="" width={150} />
-                </div>
+                {loading ? (
+                  <SpinnerLoader />
+                ) : (
+                  <>
+                    <div>
+                      <ul>
+                        <li>Categories</li>
+                        {categories?.map((val, i) => {
+                          return (
+                            <li
+                              key={i}
+                              onMouseEnter={() => setCurrentCatIndex(i)}
+                            >
+                              <Link to={`store/${val.name}`}>{val.name}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                    <div>
+                      <ul>
+                        <li>Sub-Categories</li>
+                        {categories[currentCatIndex]?.subCategory.map(
+                          (cat, i) => {
+                            return (
+                              <li key={i}>
+                                <Link
+                                  to={`store/${categories[currentCatIndex].name}/${cat}`}
+                                >
+                                  {cat}
+                                </Link>
+                              </li>
+                            );
+                          }
+                        )}
+                      </ul>
+                    </div>
+                    <div>
+                      <img
+                        src={categories[currentCatIndex]?.image?.url}
+                        alt=""
+                        width={150}
+                        height={150}
+                        className="shadow"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             </li>
-            <li>CONTACT</li>
+            <li>
+              <Link to="/contact">CONTACT</Link>
+            </li>
           </ul>
         </div>
         <div>

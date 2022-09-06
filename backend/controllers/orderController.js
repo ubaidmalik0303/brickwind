@@ -1,7 +1,16 @@
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
+
+const updateStock = async (id, quantity) => {
+  const product = await Product.findById(id);
+
+  product.stock -= quantity;
+
+  await product.save({ validateBeforeSave: true });
+};
 
 //Create New Order
 exports.newOrder = catchAsyncError(async (req, res, next) => {
@@ -9,7 +18,7 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
     shippingInfo,
     orderItems,
     paymentInfo,
-    ItemsPrice,
+    itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
@@ -19,13 +28,38 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
     shippingInfo,
     orderItems,
     paymentInfo,
-    ItemsPrice,
+    itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
     paidAt: Date.now(),
     user: req.user._id,
   });
+
+  order.orderItems.forEach(async (item) => {
+    await updateStock(item.product, item.quantity);
+  });
+
+  const user = await User.findById(req.user._id);
+  orderItems.forEach((product) => {
+    if (user.purchasedItems[0]) {
+      const alreadyAdded = user.purchasedItems.filter(
+        (item) => item.product.toString() === product.product.toString()
+      );
+      if (alreadyAdded[0]) {
+        return;
+      } else {
+        user.purchasedItems.push({
+          product: product.product,
+        });
+      }
+    } else {
+      user.purchasedItems.push({
+        product: product.product,
+      });
+    }
+  });
+  await user.save();
 
   res.status(201).json({
     success: true,
@@ -87,10 +121,6 @@ exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("You Have Already Delivered This Order", 400));
   }
 
-  order.orderItems.forEach(async (item) => {
-    await updateStock(item.product, item.quantity);
-  });
-
   order.orderStatus = req.body.status;
 
   if (req.body.orderStatus === "Delivered") {
@@ -103,14 +133,6 @@ exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
     success: true,
   });
 });
-
-const updateStock = async (id, quantity) => {
-  const product = await Product.findById(id);
-
-  product.stock -= quantity;
-
-  await product.save({ validateBeforeSave: true });
-};
 
 //Delete Order --Admin
 exports.deleteOrder = catchAsyncError(async (req, res, next) => {

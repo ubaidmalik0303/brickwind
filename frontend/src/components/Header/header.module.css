@@ -1,3 +1,7 @@
+.bglightblack:is {
+  background-color: rgb(49, 47, 47);
+}
+
 .menuicon {
   display: none;
 }
@@ -13,6 +17,8 @@
   background-color: transparent;
   align-items: center;
   width: 100%;
+  background-color: rgba(255, 255, 255, 0.281);
+  box-shadow: 2px 2px 50px 50px rgba(255, 255, 255, 0.281);
   transition: all 200ms linear;
 }
 
@@ -24,6 +30,12 @@
   padding: 10px 40px;
   background-color: white;
   border-bottom: 1px solid rgb(236, 233, 233);
+  box-shadow: none;
+}
+
+.logoimg {
+  width: 150px;
+  height: 50px;
 }
 
 .header > div:nth-child(3) {
@@ -45,7 +57,7 @@
   cursor: pointer;
 }
 
-.header > div > ul > li > a{
+.header > div > ul > li > a {
   text-decoration: none;
   color: black;
 }
@@ -59,10 +71,11 @@
   padding: 10px;
   position: absolute;
   top: 30px;
-  left: 0;
+  left: -150px;
   display: flex;
   flex-direction: row;
-  width: 600px;
+  width: 700px !important;
+  width: auto;
   justify-content: space-between;
   visibility: hidden;
   opacity: 0;
@@ -97,23 +110,94 @@
   font-weight: 600;
 }
 
-.mobileNavbar{
-  width: 250px;
+.dropdown > div > ul li a {
+  color: black;
+  text-decoration: none;
+}
+
+.mobileNavbar {
+  width: 300px;
   height: 100vh;
-  background-color: #1D2127;
+  background-color: #1d2127;
   position: fixed;
   top: 0;
   left: -200vw;
   z-index: 1001;
+  overflow-y: scroll;
   transition: left 200ms linear;
 }
 
+.mobilenavcontent h2 {
+  margin: 5px 0 0 5px;
+}
+
+.mobilenavcontent h2 > a {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: italic;
+}
+
+.mobilenavcontent ul {
+  list-style: none;
+  margin: 20px 0 0 10px;
+  padding: 0;
+}
+
+.mobilenavcontent ul li {
+  margin: 5px 0;
+  position: relative;
+}
+
+.mobilenavcontent ul li svg {
+  position: absolute;
+  right: 10px;
+}
+
+.mobilenavcontent ul li a {
+  color: white;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.mobileNavbar ul li > ul {
+  margin: 0 0 0 10px;
+  padding: 0;
+  height: auto;
+  overflow: hidden;
+  transition: all 200ms linear;
+}
+
+.showmobileNavbardropdown {
+  height: 100%;
+  cursor: pointer;
+}
+
+.scrolltotopbtn {
+  background-color: black;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  z-index: 2000;
+  cursor: pointer;
+  transform: translateY(100px);
+  transition: transform 300ms linear;
+}
+
+.showscrollbtn {
+  transform: translateY(0);
+}
+
 @media screen and (max-width: 900px) {
-  .showmobilenav{
+  .showmobilenav {
     left: 0;
   }
 
-  .hidemobilenav{
+  .hidemobilenav {
     left: -200vw;
   }
 
@@ -133,11 +217,11 @@
     display: initial;
   }
 
-  .searchicon{
+  .searchicon {
     display: none;
   }
 
-  .header > div:nth-child(3) > svg{
+  .header > div:nth-child(3) > svg {
     height: 25px;
     margin: 0 5px;
   }

@@ -1,10 +1,8 @@
 import React from "react";
 import BreadcrumbStyles from "./breadcrumb.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Breadcrumb = ({ breadcrumbpath, name }) => {
-
-  const location = useLocation();
+const Breadcrumb = ({ breadcrumbpath, name, auth }) => {
 
   return (
     <>
@@ -14,7 +12,7 @@ const Breadcrumb = ({ breadcrumbpath, name }) => {
       ></div>
       <div className={`container-fluid ${BreadcrumbStyles.breadcrumb}`}>
         <span>
-          <Link to="/">Home</Link><Link to="/my-account"> {">"} My Account</Link><span>{breadcrumbpath && breadcrumbpath}</span>
+          <Link to="/">Home</Link>{auth === "no" ? null : <Link to="/my-account"> {">"} My Account</Link>}<span>{breadcrumbpath && breadcrumbpath}</span>
         </span>
         <h1>{name && name}</h1>
       </div>

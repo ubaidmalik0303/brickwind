@@ -16,9 +16,7 @@ export const updateProfile = (userData) => async (dispatch) => {
 
     const token = getAuthToken();
 
-    const config = {
-      headers: { "Content-Type": "multipart/form-data", token: token },
-    };
+    const config = { headers: { "Content-type": "multipart/form-data", token } };
 
     const { data } = await axiosInstance.put(
       "/api/v1/my-account/update",

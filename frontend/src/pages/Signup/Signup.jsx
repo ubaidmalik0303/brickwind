@@ -31,7 +31,7 @@ const Signup = () => {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
-          setAvatar(reader.result);
+          setAvatar(e.target.files[0]);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -47,6 +47,10 @@ const Signup = () => {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
+
+    if (avatar.size > 500000) {
+      return alert.error("Please Upload Image Less Then 500KB");
+    }
 
     dispatch(register(myForm));
   };
@@ -64,7 +68,7 @@ const Signup = () => {
 
   return (
     <>
-      <Breadcrumb name="SIGNUP" breadcrumbpath={" > Signup"} />
+      <Breadcrumb name="SIGNUP" breadcrumbpath={" > Signup"} auth="no" />
       <div className={`container-fluid ${SignupStyles.signup}`}>
         <div className="container py-5">
           <div className="row justify-content-center">
@@ -99,6 +103,7 @@ const Signup = () => {
                       type="file"
                       name="avatar"
                       accept="image/*"
+                      required
                     />
                     <input type="submit" value="Signup" />
                   </form>

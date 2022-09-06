@@ -86,5 +86,24 @@
   padding: 10px 20px;
   position: absolute;
   right: 0;
+  top: 50px;
+}
+
+.toadminbtn{
+  outline: none;
+  border: none;
+  background-color: green;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 20px;
+  position: absolute;
+  right: 0;
   top: 0;
+  text-decoration: none;
+  color: white;
+  margin: auto;
+}
+
+.toadminbtn:hover{
+  color: white;
 }

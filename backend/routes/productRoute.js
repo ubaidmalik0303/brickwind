@@ -9,24 +9,39 @@ const {
   reviewForProduct,
   getProductReviews,
   deleteReview,
+  getAdminProducts,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
+const upload = require("../utils/imageUpload");
 
 //Routes For Product
 router.route("/products").get(getAllProducts);
 router
-  .route("/admin/products/new")
-  .post(isAuthenticatedUser, authorizeRole("admin"), createProduct);
+  .route("/admin/products")
+  .get(isAuthenticatedUser, authorizeRole("admin"), getAdminProducts);
 router
-  .route("/admin/products/update/:id")
-  .put(isAuthenticatedUser, authorizeRole("admin"), updateProduct);
+  .route("/admin/product/new")
+  .post(
+    isAuthenticatedUser,
+    authorizeRole("admin"),
+    upload.array("images"),
+    createProduct
+  );
 router
-  .route("/admin/products/delete/:id")
+  .route("/admin/product/update/:id")
+  .put(
+    isAuthenticatedUser,
+    authorizeRole("admin"),
+    upload.array("images"),
+    updateProduct
+  );
+router
+  .route("/admin/product/delete/:id")
   .delete(isAuthenticatedUser, authorizeRole("admin"), deleteProduct);
 router.route("/product/:id").get(getProductDetails);
-router.route("/review").put(isAuthenticatedUser, reviewForProduct);
 router
   .route("/reviews")
+  .put(isAuthenticatedUser, reviewForProduct)
   .get(getProductReviews)
   .delete(isAuthenticatedUser, deleteReview);
 

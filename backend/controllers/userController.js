@@ -1,19 +1,14 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const User = require("../models/userModel");
+const Product = require("../models/productModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendResetPasswordMail");
 const crypto = require("crypto");
-const cloudnary = require("cloudinary");
+var fs = require("fs");
 
 //Register A User
 exports.userRegister = catchAsyncError(async (req, res, next) => {
-  const myCloud = await cloudnary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatars",
-    width: 250,
-    crop: "scale",
-  });
-
   const { name, email, password } = req.body;
 
   const user = await User.create({
@@ -21,11 +16,12 @@ exports.userRegister = catchAsyncError(async (req, res, next) => {
     email,
     password,
     avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
+      public_id: req.file.filename,
+      url: "images/" + req.file.filename,
     },
   });
 
+  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
   sendToken(res, 201, user);
 });
 
@@ -45,6 +41,8 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid Email or Password", 401));
   }
+
+  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
   sendToken(res, 200, user);
 });
 
@@ -83,7 +81,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      subject: "Ecommerce Password Recovery",
+      subject: "BrickWind Password Recovery",
       message,
     });
 
@@ -140,6 +138,8 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
+  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
+
   res.status(200).json({
     success: true,
     user,
@@ -178,20 +178,15 @@ exports.updateUserProfile = catchAsyncError(async (req, res, next) => {
 
   if (req.body.avatar !== "") {
     const user = await User.findById(req.user.id);
-    const imageId = user.avatar.public_id;
-
-    await cloudnary.v2.uploader.destroy(imageId);
-
-    const myCloud = await cloudnary.v2.uploader.upload(req.body.avatar, {
-      folder: "avatars",
-      width: 250,
-      crop: "scale",
-    });
 
     userNewDetails.avatar = {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
+      public_id: req.file.filename,
+      url: "images/" + req.file.filename,
     };
+
+    fs.unlink(`uploads/${req.user.avatar.public_id}`, function (err) {
+      if (err) throw err;
+    });
   }
 
   const user = await User.findByIdAndUpdate(req.user.id, userNewDetails, {
@@ -233,19 +228,10 @@ exports.getSingleUser = catchAsyncError(async (req, res, next) => {
 
 //Update User Role --Admin
 exports.updateUserRole = catchAsyncError(async (req, res, next) => {
-  const userNewDetails = {
-    name: req.body.name,
-    email: req.body.email,
-    role: req.body.role,
-  };
+  const user = await User.findById(req.params.id);
+  user.role = req.body.role;
 
-  //Cloud update later
-
-  const user = await User.findByIdAndUpdate(req.params.id, userNewDetails, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
+  await user.save();
 
   res.status(200).json({
     success: true,
@@ -262,12 +248,56 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
     );
   }
 
-  //We Will Remove Cloudnary
+  fs.unlink(`uploads/${user.avatar.public_id}`, function (err) {
+    if (err) throw err;
+  });
 
   await user.remove();
 
   res.status(200).json({
     success: true,
     message: "User Deleted SuccessFully",
+  });
+});
+
+//Add To Wishlist
+exports.addtowishlist = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  await user.wishlist.push(req.body.productid);
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    wishlist: user.wishlist,
+  });
+});
+
+//Add To Wishlist
+exports.removefromwishlist = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  user.wishlist = await user.wishlist.filter(
+    (val) => val !== req.params.productid
+  );
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    wishlist: user.wishlist,
+  });
+});
+
+//get Wishlist
+exports.getwishlist = catchAsyncError(async (req, res, next) => {
+  const wishlist = await Product.find({ _id: { $in: req.user.wishlist } });
+
+  wishlist?.forEach((product) => {
+    product?.images?.forEach((val) => {
+      val.url = process.env.HOST_NAME + val.url;
+    });
+  });
+
+  res.status(200).json({
+    success: true,
+    wishlist,
   });
 });

@@ -1,0 +1,62 @@
+.updateproduct * {
+  font-family: "Poppins", sans-serif;
+}
+
+.updateproduct h2 {
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.updateproduct form {
+  display: flex;
+  flex-direction: column;
+}
+
+.updateproduct form > input {
+  margin: 15px 0;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  background-color: rgb(240, 238, 238);
+  font-family: "Poppins", sans-serif;
+  height: 50px;
+  padding: 10px;
+}
+
+.updateproduct form > textarea {
+  margin: 15px 0;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  background-color: rgb(240, 238, 238);
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+}
+
+.updateproduct form > select {
+  margin: 15px 0;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  background-color: rgb(240, 238, 238);
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+}
+
+.updateimagesbox {
+  margin: 15px 0;
+  font-weight: 400;
+  background-color: rgb(240, 238, 238);
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+}
+
+.updateimagesbox > div {
+  padding: 10px 0 0 0;
+}
+
+.updateproduct form > input[type="submit"] {
+  background-color: black;
+  color: white;
+  font-weight: 700;
+}

@@ -28,10 +28,10 @@ const EditAccount = () => {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
-          setAvatar(reader.result);
+          setAvatar(e.target.files[0]);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e?.target?.files[0]);
     }
   };
 
@@ -40,7 +40,13 @@ const EditAccount = () => {
     const myForm = new FormData();
     myForm.set("name", name);
     myForm.set("email", email);
-    myForm.set("avatar", avatar);
+
+    if (avatar) {
+      myForm.set("avatar", avatar);
+      if (avatar.size > 500000) {
+        return alert.error("Please Upload Image Less Then 500KB");
+      }
+    }
 
     dispatch(updateProfile(myForm));
     setAvatar("");

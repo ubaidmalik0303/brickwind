@@ -37,6 +37,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  superAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  purchasedItems: [
+    {
+      product: {
+        type: mongoose.Schema.ObjectId,
+      },
+      isReviewed: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
+  wishlist: [String],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -80,6 +96,6 @@ userSchema.methods.getResetPasswordToken = function () {
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
   return resetToken;
-}
+};
 
 module.exports = mongoose.model("User", userSchema);

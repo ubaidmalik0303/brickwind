@@ -1,0 +1,20 @@
+.orderSuccess *{
+    font-family: "Poppins", sans-serif;
+}
+
+.orderSuccess svg{
+    color: rgb(7, 233, 7);
+}
+
+.orderSuccess h2{
+    margin: 30px 0;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.orderSuccess a{
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+}
