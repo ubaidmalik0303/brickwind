@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import headerStyles from "./header.module.css";
 import { FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import BrickWindLogoWhite from "../../assets/brickwind-logo-white.png";
 import CategoriesList from "../CategoriesCollapse/CategoriesList";
 import { useSelector } from "react-redux";
 
-const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
+const MobileNavbar = ({ isShow, showFunc, setIsShow }) => {
   const navigate = useNavigate();
   const { website } = useSelector((state) => state.getwebsitedetails);
 
   useEffect(() => {
     setIsShow(false);
-  }, [navigate]);
+  }, [navigate, setIsShow]);
 
   return (
     <div

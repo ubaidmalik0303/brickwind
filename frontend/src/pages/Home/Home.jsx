@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import HomeStyles from "./home.module.css";
 import ThemeLinkButton from "../../components/ThemeLinkButton/ThemeLinkButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { clearErrors, getProducts } from "../../store/Actions/ProductActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
-import CategoriesCollapse from "../../components/CategoriesCollapse/CategoriesCollapse";
 import SEO from "../../components/SEO/SEO";
 
 const Home = () => {

@@ -168,6 +168,11 @@ const ProductPage = () => {
       });
     }
 
+    if (relatedProductsError) {
+      alert.error(relatedProductsError);
+      dispatch(clearErrors());
+    }
+
     dispatch(getProductDetails(productid));
     dispatch(getProducts("", 1, [0, 5000], category, subcategory, 0));
   }, [
@@ -179,6 +184,9 @@ const ProductPage = () => {
     success,
     reviewSuccess,
     reviewError,
+    relatedProductsError,
+    category,
+    subcategory,
   ]);
 
   useEffect(() => {

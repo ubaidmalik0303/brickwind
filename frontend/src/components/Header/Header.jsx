@@ -11,7 +11,6 @@ import {
   FiChevronsUp,
 } from "react-icons/fi";
 import MobileNavbar from "./MobileNavbar";
-import BrickWindLogo from "../../assets/brickwind-logo.png";
 import {
   allCategories,
   clearErrors,
@@ -69,7 +68,7 @@ const Header = () => {
     }
 
     dispatch(allCategories());
-  }, [dispatch, error]);
+  }, [dispatch, error, alert]);
 
   return (
     <>

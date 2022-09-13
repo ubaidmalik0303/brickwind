@@ -106,7 +106,7 @@ const AddCategory = () => {
     }
 
     dispatch(allCategories());
-  }, [dispatch, error, success, catError, subCatError, subCatSuccess]);
+  }, [dispatch, error, success, catError, subCatError, subCatSuccess, alert]);
 
   return (
     <>
