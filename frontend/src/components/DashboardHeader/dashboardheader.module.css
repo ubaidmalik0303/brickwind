@@ -1,3 +1,7 @@
+.header *{
+    font-family: "Poppins", sans-serif;
+}
+
 .header{
     display: flex;
     border-bottom: 1px solid rgb(236, 235, 235);
@@ -9,9 +13,19 @@
     align-items: center;
 }
 
+.menuicon{
+    display: none;
+}
+
 .header div a{
     text-decoration: none;
     color: black;
     font-weight: 700;
     margin: 0 10px;
+}
+
+@media screen and (max-width: 1000px){
+    .menuicon{
+        display: initial;
+    }
 }

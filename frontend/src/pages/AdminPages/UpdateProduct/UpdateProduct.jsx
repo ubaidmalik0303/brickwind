@@ -11,6 +11,7 @@ import { useAlert } from "react-alert";
 import { UPDATE_PRODUCT_RESET } from "../../../store/Constants/ProductConstants";
 import SpinnerLoader from "../../../components/SpinnerLoader/SpinnerLoader";
 import { useParams, useNavigate } from "react-router-dom";
+import SEO from "../../../components/SEO/SEO";
 
 const UpdateProduct = () => {
   const {
@@ -42,14 +43,6 @@ const UpdateProduct = () => {
   const [imagesPreview, setImagesPreview] = useState([]);
 
   const [currentSubCategories, setCurrentSubCategories] = useState([]);
-
-  const getSubCategories = () => {
-    let filterSubCategories = categories.filter(
-      (val) => val?.name === product?.category
-    );
-    const getSubCategories = filterSubCategories[0]?.subCategory;
-    setCurrentSubCategories(getSubCategories);
-  };
 
   const categoryHandle = (e) => {
     setCategory(e.target.value);
@@ -123,6 +116,7 @@ const UpdateProduct = () => {
 
     if (isUpdated) {
       alert.success("Product Updated SuccessFully");
+      dispatch(getProductDetails(id));
       navigate("/admin/products");
       dispatch({
         type: UPDATE_PRODUCT_RESET,
@@ -148,101 +142,119 @@ const UpdateProduct = () => {
   ]);
 
   return (
-    <div className={UpdateProductStyles.updateproduct}>
-      <div className="container">
-        <div className="row justify-content-center">
-          {loading || updateLoading || catLoading ? (
-            <SpinnerLoader />
-          ) : (
-            <div className="col-md-7">
-              <h2 className="text-center">Update Product</h2>
-              <form
-                onSubmit={updateProductSubmitHandler}
-                encType="multipart/form-data"
-              >
-                <input
-                  type="text"
-                  placeholder="Enter Product Name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  value={name}
-                />
-                <textarea
-                  placeholder="Enter Product Discription"
-                  required
-                  rows={5}
-                  onChange={(e) => setDiscription(e.target.value)}
-                  value={discription}
-                ></textarea>
-                <span
-                  style={{
-                    fontSize: 12,
-                  }}
+    <>
+      <SEO title="Update Product - BrickWind" />
+      <div className={UpdateProductStyles.updateproduct}>
+        <div className="container">
+          <div className="row justify-content-center">
+            {loading || updateLoading || catLoading ? (
+              <SpinnerLoader />
+            ) : (
+              <div className="col-md-7">
+                <h2 className="text-center">Update Product</h2>
+                <form
+                  onSubmit={updateProductSubmitHandler}
+                  encType="multipart/form-data"
                 >
-                  Category:{" "}
-                </span>
-                <select onChange={categoryHandle}>
-                  {categories.map((val, i) => {
-                    return (
-                      <option
-                        selected={product.category === val.name ? true : false}
-                        key={i}
-                        value={val.name}
-                      >
-                        {val.name}
-                      </option>
-                    );
-                  })}
-                </select>
-                {currentSubCategories[0] && (
-                  <>
-                    <span
-                      style={{
-                        fontSize: 12,
-                      }}
-                    >
-                      Sub-Category:{" "}
-                    </span>
-                    <select onChange={(e) => setSubCategory(e.target.value)}>
-                      {currentSubCategories.map((val, i) => {
-                        return (
-                          <option value={val} key={i}>
-                            {val}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </>
-                )}
-                <input
-                  min={1}
-                  type="number"
-                  placeholder="Enter Product Price"
-                  required
-                  onChange={(e) => setPrice(e.target.value)}
-                  value={price}
-                />
-                <input
-                  min={1}
-                  type="number"
-                  placeholder="Enter Product Stock"
-                  required
-                  onChange={(e) => setStock(e.target.value)}
-                  value={stock}
-                />
-                <div className={UpdateProductStyles.updateimagesbox}>
                   <input
-                    onChange={updateProductImageChangeHandler}
-                    type="file"
-                    accept="image/*"
-                    multiple
+                    type="text"
+                    placeholder="Enter Product Name"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    value={name}
                   />
-                  <div>
-                    {oldImages &&
-                      oldImages.map((image, i) => {
+                  <textarea
+                    placeholder="Enter Product Discription"
+                    required
+                    rows={5}
+                    onChange={(e) => setDiscription(e.target.value)}
+                    value={discription}
+                  ></textarea>
+                  <span
+                    style={{
+                      fontSize: 12,
+                    }}
+                  >
+                    Category:{" "}
+                  </span>
+                  <select onChange={categoryHandle}>
+                    {categories.map((val, i) => {
+                      return (
+                        <option
+                          selected={
+                            product.category === val.name ? true : false
+                          }
+                          key={i}
+                          value={val.name}
+                        >
+                          {val.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {currentSubCategories[0] && (
+                    <>
+                      <span
+                        style={{
+                          fontSize: 12,
+                        }}
+                      >
+                        Sub-Category:{" "}
+                      </span>
+                      <select onChange={(e) => setSubCategory(e.target.value)}>
+                        {currentSubCategories.map((val, i) => {
+                          return (
+                            <option value={val} key={i}>
+                              {val}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </>
+                  )}
+                  <input
+                    min={1}
+                    type="number"
+                    placeholder="Enter Product Price"
+                    required
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
+                  />
+                  <input
+                    min={1}
+                    type="number"
+                    placeholder="Enter Product Stock"
+                    required
+                    onChange={(e) => setStock(e.target.value)}
+                    value={stock}
+                  />
+                  <div className={UpdateProductStyles.updateimagesbox}>
+                    <input
+                      onChange={updateProductImageChangeHandler}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                    />
+                    <div>
+                      {oldImages &&
+                        oldImages.map((image, i) => {
+                          return (
+                            <img
+                              src={image.url}
+                              key={i}
+                              alt=""
+                              width={100}
+                              height={100}
+                              className="m-2"
+                            />
+                          );
+                        })}
+                    </div>
+                    <div>
+                      {imagesPreview.map((image, i) => {
                         return (
                           <img
-                            src={image.url}
+                            src={image}
                             key={i}
                             alt=""
                             width={100}
@@ -251,29 +263,16 @@ const UpdateProduct = () => {
                           />
                         );
                       })}
+                    </div>
                   </div>
-                  <div>
-                    {imagesPreview.map((image, i) => {
-                      return (
-                        <img
-                          src={image}
-                          key={i}
-                          alt=""
-                          width={100}
-                          height={100}
-                          className="m-2"
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-                <input type="submit" value="Update Product" />
-              </form>
-            </div>
-          )}
+                  <input type="submit" value="Update Product" />
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

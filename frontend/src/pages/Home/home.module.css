@@ -15,9 +15,8 @@
 }
 
 .banner {
-  background: url("../../assets/bg-banner.jpg");
   backface-visibility: hidden;
-  background-position: right;
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   /* animation: fadeOut 10s linear infinite alternate; */

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import CategoriesCollapseStyles from "./CategoriesCollapse.module.css";
 import { Link } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
-import { Collapse } from "react-bootstrap";
 
-const CategoriesCollapse = ({ link, title, children }) => {
+const CategoriesCollapse = ({ link, title, children, cat, catOpen }) => {
   const [open, setOpen] = useState(false);
 
   const toggleCollapse = () => {
@@ -15,10 +14,16 @@ const CategoriesCollapse = ({ link, title, children }) => {
     <div className={CategoriesCollapseStyles.categoriescollapse}>
       <div className={CategoriesCollapseStyles.head}>
         <Link to={link}>{title}</Link>
-        <FaChevronDown onClick={toggleCollapse} />
+        {cat.subCategory[0] && catOpen && (
+          <FaChevronDown onClick={toggleCollapse} size={12} />
+        )}
       </div>
-      <div>
-        {/* <Collapse></Collapse> */}
+      <div
+        className={`${CategoriesCollapseStyles.collapsebox} ${
+          open ? CategoriesCollapseStyles.collapseboxshow : ""
+        }`}
+      >
+        {children}
       </div>
     </div>
   );

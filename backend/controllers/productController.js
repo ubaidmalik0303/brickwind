@@ -4,22 +4,42 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apiFeatures");
 const fs = require("fs");
+const { storage } = require("../utils/firebase");
+const {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require("firebase/storage");
+var keygen = require("keygenerator");
 
 //Create A Product  --Admin
 exports.createProduct = catchAsyncError(async (req, res, next) => {
-  const imagesLinks = [];
-
-  req.files.forEach((img) => {
-    imagesLinks.push({
-      public_id: img.filename,
-      url: "images/" + img.filename,
-    });
-  });
-
-  req.body.images = imagesLinks;
   req.body.createdBy = req.user.id;
 
   const product = await Product.create(req.body);
+
+  const uploadImagesPromise = req.files.images.map(async (img) => {
+    const imageKey = keygen._();
+    const imageName = imageKey + "." + img.mimetype.split("/")[1];
+
+    const imageRef = ref(storage, `products/${imageName}`);
+    const uploadTask = await uploadBytes(imageRef, img.data, {
+      contentType: img.mimetype,
+    });
+    const downloadUrl = await getDownloadURL(imageRef).then((url) => {
+      return url;
+    });
+    return {
+      public_id: imageName,
+      url: downloadUrl,
+    };
+  });
+
+  const imagesLinks = await Promise.all(uploadImagesPromise);
+  product.images = imagesLinks;
+
+  await product.save();
 
   res.status(201).json({
     success: true,
@@ -43,12 +63,6 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
   apiFeature.pagination(resultPerPage);
 
   products = await apiFeature.query;
-
-  products.forEach((val) => {
-    val.images.forEach((element) => {
-      element.url = process.env.HOST_NAME + element.url;
-    });
-  });
 
   res.status(201).json({
     success: true,
@@ -77,10 +91,6 @@ exports.getProductDetails = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Product Not Found", 404));
   }
 
-  product.images.forEach((element) => {
-    element.url = process.env.HOST_NAME + element.url;
-  });
-
   res.header("Access-Control-Allow-Origin", "*").status(200).json({
     success: true,
     product,
@@ -98,22 +108,32 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
     });
   }
 
-  if (req.files[0]) {
-    product.images.forEach((element) => {
-      fs.unlink(`uploads/${element.public_id}`, function (err) {
-        if (err) throw err;
-        console.log("File deleted!");
-      });
+  if (req.files?.images) {
+    product.images.forEach(async (element) => {
+      //Delete Image
+      const deleteRef = ref(storage, `products/${element.public_id}`);
+      await deleteObject(deleteRef);
     });
 
-    const imagesLinks = [];
+    //upload New Images
+    const uploadImagesPromise = req.files.images.map(async (img) => {
+      const imageKey = keygen._();
+      const imageName = imageKey + "." + img.mimetype.split("/")[1];
 
-    req.files.forEach((img) => {
-      imagesLinks.push({
-        public_id: img.filename,
-        url: "images/" + img.filename,
+      const imageRef = ref(storage, `products/${imageName}`);
+      const uploadTask = await uploadBytes(imageRef, img.data, {
+        contentType: img.mimetype,
       });
+      const downloadUrl = await getDownloadURL(imageRef).then((url) => {
+        return url;
+      });
+      return {
+        public_id: imageName,
+        url: downloadUrl,
+      };
     });
+
+    const imagesLinks = await Promise.all(uploadImagesPromise);
 
     req.body.images = imagesLinks;
   }
@@ -141,11 +161,10 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     });
   }
 
-  product.images.forEach((element) => {
-    fs.unlink(`uploads/${element.public_id}`, function (err) {
-      if (err) throw err;
-      console.log("File deleted!");
-    });
+  product.images.forEach(async (element) => {
+    //Delete Image
+    const deleteRef = await ref(storage, `products/${element.public_id}`);
+    await deleteObject(deleteRef);
   });
 
   await product.remove();
@@ -236,11 +255,19 @@ exports.deleteReview = catchAsyncError(async (req, res, next) => {
 
   //Calculate Rating
   let avg = 0;
+
   reviews.forEach((rev) => {
     avg += rev.rating;
+    console.log(avg, rev.rating);
   });
 
-  const ratings = avg / reviews.length;
+  let ratings = 0;
+
+  if (reviews.length === 0) {
+    ratings = 0;
+  } else {
+    ratings = avg / reviews.length;
+  }
 
   const numOfReviews = reviews.length;
 

@@ -139,7 +139,7 @@
   font-style: italic;
 }
 
-.mobilenavcontent ul {
+.mobilenavcontent > ul {
   list-style: none;
   margin: 20px 0 0 10px;
   padding: 0;
@@ -156,11 +156,15 @@
 }
 
 .mobilenavcontent ul li a {
-  color: white;
+  color: white !important;
   text-decoration: none;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
+}
+
+.mobilenavcontent ul li svg{
+  color: white !important;
 }
 
 .mobileNavbar ul li > ul {
@@ -215,10 +219,6 @@
 
   .menuicon {
     display: initial;
-  }
-
-  .searchicon {
-    display: none;
   }
 
   .header > div:nth-child(3) > svg {

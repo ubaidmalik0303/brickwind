@@ -11,3 +11,24 @@
 .categoriescollapse .head span {
   color: black;
 }
+
+.collapsebox{
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+
+.collapseboxshow{
+  height: auto;
+}
+
+.categories ul{
+  list-style: none;
+  padding-left: 10px;
+  font-size: 14px;
+}
+
+.categories ul li a{
+  color: black;
+  text-decoration: none;
+}

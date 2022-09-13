@@ -8,6 +8,7 @@ import {
   addItemsToCart,
   removeItemFromCart,
 } from "../../store/Actions/CartActions";
+import SEO from "../../components/SEO/SEO";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Cart = () => {
 
   return (
     <>
+      <SEO title="Cart - BrickWind" />
       <BreadCrumb name="CART" breadcrumbpath=" > Cart" />
       <div className={`container-fluid ${CartStyles.cart} p-3 p-md-5`}>
         {!cartItems[0] ? (

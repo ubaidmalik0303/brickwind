@@ -6,6 +6,7 @@ import { orderDetails, clearErrors } from "../../store/Actions/OrderActions";
 import { useAlert } from "react-alert";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 import { Link, useParams } from "react-router-dom";
+import SEO from "../../components/SEO/SEO";
 
 const OrderDetails = () => {
   const { error, loading, order } = useSelector((state) => state.orderdetails);
@@ -24,6 +25,7 @@ const OrderDetails = () => {
 
   return (
     <>
+      <SEO title="Order Details - BrickWind" />
       <BreadCrumb name="Order Details" breadcrumbpath=" > Order Details" />
       <div className={`container-fluid ${OrderDetailsStyles.orderdetails}`}>
         {loading ? (
@@ -97,7 +99,7 @@ const OrderDetails = () => {
                           <div className="px-2">
                             <b>{val?.name}</b>
                             <p>
-                              {val?.quantity} X {val?.price} ={" "}
+                              {val?.quantity} X {val?.price} = $
                               {val?.quantity * val?.price}
                             </p>
                           </div>

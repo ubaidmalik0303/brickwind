@@ -16,6 +16,7 @@ import { getAuthToken } from "../../utils/authTokenLocalStorage";
 import { useNavigate } from "react-router-dom";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 import { createOrder, clearErrors } from "../../store/Actions/OrderActions";
+import SEO from "../../components/SEO/SEO";
 
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -120,36 +121,39 @@ const Payment = () => {
   }, [dispatch, error, alert]);
 
   return (
-    <div className={`container-fluid ${PaymentStyles.payment}`}>
-      <div className="py-5 mb-5"></div>
-      <ShippingStepper activeStep={2} />
-      <div className="row justify-content-center">
-        <div className="col-lg-4 col-md-6 col-sm-6">
-          <form onSubmit={submitHandler} className="shadow p-4 my-5">
-            <h3 className="text-center">Card Info</h3>
-            <div className={PaymentStyles.iconinput}>
-              <FaCreditCard />
-              <CardNumberElement className={PaymentStyles.paymentinput} />
-            </div>
-            <div className={PaymentStyles.iconinput}>
-              <FaCalendar />
-              <CardExpiryElement className={PaymentStyles.paymentinput} />
-            </div>
-            <div className={PaymentStyles.iconinput}>
-              <FaKey />
-              <CardCvcElement className={PaymentStyles.paymentinput} />
-            </div>
-            <button type="submit" ref={payBtn}>
-              {paymentBtnLoading ? (
-                <SpinnerLoader size="sm" />
-              ) : (
-                `Pay - $${orderInfo && orderInfo?.totalPrice}`
-              )}
-            </button>
-          </form>
+    <>
+      <SEO title="Payment - BrickWind" />
+      <div className={`container-fluid ${PaymentStyles.payment}`}>
+        <div className="py-5 mb-5"></div>
+        <ShippingStepper activeStep={2} />
+        <div className="row justify-content-center">
+          <div className="col-lg-4 col-md-6 col-sm-6">
+            <form onSubmit={submitHandler} className="shadow p-4 my-5">
+              <h3 className="text-center">Card Info</h3>
+              <div className={PaymentStyles.iconinput}>
+                <FaCreditCard />
+                <CardNumberElement className={PaymentStyles.paymentinput} />
+              </div>
+              <div className={PaymentStyles.iconinput}>
+                <FaCalendar />
+                <CardExpiryElement className={PaymentStyles.paymentinput} />
+              </div>
+              <div className={PaymentStyles.iconinput}>
+                <FaKey />
+                <CardCvcElement className={PaymentStyles.paymentinput} />
+              </div>
+              <button type="submit" ref={payBtn}>
+                {paymentBtnLoading ? (
+                  <SpinnerLoader size="sm" />
+                ) : (
+                  `Pay - $${orderInfo && orderInfo?.totalPrice}`
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

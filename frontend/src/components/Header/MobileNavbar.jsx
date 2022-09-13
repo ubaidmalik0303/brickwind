@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import headerStyles from "./header.module.css";
 import { FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { FiChevronDown } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import BrickWindLogoWhite from "../../assets/brickwind-logo-white.png";
-
+import CategoriesList from "../CategoriesCollapse/CategoriesList";
+import { useSelector } from "react-redux";
 
 const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
   const navigate = useNavigate();
+  const {
+    website,
+  } = useSelector((state) => state.getwebsitedetails);
 
   useEffect(() => {
     setIsShow(false);
@@ -32,7 +35,7 @@ const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
       />
       <div className={headerStyles.mobilenavcontent}>
         <h2>
-          <img src={BrickWindLogoWhite} width={150} height={70} alt="" />
+          <img src={website?.logo?.url} width={150} height={70} alt="" />
         </h2>
         <ul>
           <li>
@@ -43,16 +46,7 @@ const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
           </li>
 
           <li>
-            <Link to="/store">Store</Link>
-              <FiChevronDown
-                size={15}
-                color="white"
-                className={headerStyles.dropdownicon}
-              />
-            <ul>
-              <li>jhsdjhsd</li>
-              <li>jksdhsdjjhd</li>
-            </ul>
+            <CategoriesList heading="Store" link="/store" defaultOpen={false} />
           </li>
           <li>
             <Link to="/contact">Contact</Link>

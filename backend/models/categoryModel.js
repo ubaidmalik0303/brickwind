@@ -5,18 +5,17 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter Category Name"],
     trim: true,
+    unique: [true, "Please Enter Different Category Name"],
   },
   image: {
     public_id: {
       type: String,
-      required: true,
     },
     url: {
       type: String,
-      required: true,
     },
   },
-  subCategory: [{ type: String }],
+  subCategory: [{ type: String, trim: true }],
 });
 
 module.exports = mongoose.model("Category", categorySchema);

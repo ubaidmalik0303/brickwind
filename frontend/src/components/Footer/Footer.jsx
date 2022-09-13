@@ -7,8 +7,10 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const { website } = useSelector((state) => state.getwebsitedetails);
   return (
     <div className={FooterStyles.bglightblack}>
       <div className={`container-fluid`}>
@@ -23,16 +25,16 @@ const Footer = () => {
               <input type="button" value="SUBSCRIBE" />
             </div>
             <div className="py-5">
-              <a href="https://www.facebook.com/brickwindllc">
+              <a href={website?.facebooklink}>
                 <FaFacebook />
               </a>
-              <a href="https://www.pinterest.com/brickwindllc/">
+              <a href={website?.pinterestlink}>
                 <FaPinterest />
               </a>
-              <a href="https://www.instagram.com/brickwind.llc/">
+              <a href={website?.instagramlink}>
                 <FaInstagram />
               </a>
-              <a href="https://twitter.com/brickwind">
+              <a href={website?.twitterlink}>
                 <FaTwitter />
               </a>
             </div>
@@ -43,12 +45,8 @@ const Footer = () => {
       <footer className={`container-fluid ${FooterStyles.footer}`}>
         <div className="row px-5">
           <div className="col-lg-3 col-sm-6 p-3">
-            <h3>BRICKWIND</h3>
-            <span>
-              We have our very own fleet of delivery vans. Your order will be
-              packed with care at our warehouse and delivered right to your door
-              by our friendly BrickWind team.
-            </span>
+            <h3>{website?.websitename}</h3>
+            <span>{website?.footertext}</span>
           </div>
           <div className="col-lg-2 col-sm-3 p-3">
             <h3>MY ACCOUNT</h3>
@@ -96,22 +94,22 @@ const Footer = () => {
               <div className="col-md-6">
                 <strong>ADDRESS:</strong>
                 <br />
-                <span>30 N Gould St Ste 25404, Sheridan, Wyoming, 82801</span>
+                <span>{website?.address}</span>
               </div>
               <div className="col-md-6">
                 <strong>PHONE:</strong>
                 <br />
-                <a href="tel:+16826518211">{"+1 682 651 8211"}</a>
+                <a href={`tel:${website?.contactno}`}>{website?.contactno}</a>
               </div>
               <div className="col-md-6">
                 <strong>EMAIL:</strong>
                 <br />
-                <a href="mailto:sales@brickwind.com">sales@brickwind.com</a>
+                <a href={`mailto:${website?.email}`}>{website?.email}</a>
               </div>
               <div className="col-md-6">
                 <strong>WORKING DAYS/HOURS:</strong>
                 <br />
-                <span>Mon - Fri / 9:00 AM - 5:00 PM</span>
+                <span>{website?.workinghours}</span>
               </div>
             </div>
           </div>
@@ -120,7 +118,7 @@ const Footer = () => {
         <div
           className={`container-fluid px-5 pb-4 pt-2 ${FooterStyles.footerBottom}`}
         >
-          <span>BrickWind eCommerce. © 2022. All Rights Reserved</span>
+          <span>{website?.footerbottomtext}</span>
         </div>
       </footer>
     </div>

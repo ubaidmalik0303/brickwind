@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import {
   getProductDetails,
+  getProducts,
   newReview,
 } from "../../store/Actions/ProductActions";
 import { addItemsToCart } from "../../store/Actions/CartActions";
@@ -27,6 +28,7 @@ import { NEW_REVIEW_RESET } from "../../store/Constants/ProductConstants";
 import Carousel from "react-multi-carousel";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
+import SEO from "../../components/SEO/SEO";
 
 const ProductPage = () => {
   const responsive = {
@@ -51,6 +53,11 @@ const ProductPage = () => {
 
   const { loading, product } = useSelector((state) => state.productDetails);
   const {
+    error: relatedProductsError,
+    loading: relatedProductsLoading,
+    products,
+  } = useSelector((state) => state.products);
+  const {
     isAuthenticated,
     user,
     loading: userLoading,
@@ -74,7 +81,7 @@ const ProductPage = () => {
   const [show, setShow] = useState(false);
   const [showReviewBox, setShowReviewBox] = useState(false);
   let [quantity, setQuantity] = useState(1);
-  const { productid } = useParams();
+  const { productid, category, subcategory } = useParams();
 
   const stringShort = (string) => {
     const newStr = string.slice(0, 250);
@@ -162,6 +169,7 @@ const ProductPage = () => {
     }
 
     dispatch(getProductDetails(productid));
+    dispatch(getProducts("", 1, [0, 5000], category, subcategory, 0));
   }, [
     dispatch,
     productid,
@@ -179,6 +187,12 @@ const ProductPage = () => {
 
   return (
     <>
+      {!loading && (
+        <SEO
+          title={`${product.name}`}
+          discription={stringShort(product.discription)}
+        />
+      )}
       <StorePath />
       <Modal show={showReviewBox} onHide={() => setShowReviewBox(false)}>
         <Modal.Header closeButton>
@@ -373,18 +387,13 @@ const ProductPage = () => {
         <div className="container py-5">
           <hr />
           <h3 className="my-4">Related Products:</h3>
-          {loading ? (
+          {relatedProductsLoading ? (
             <SpinnerLoader />
           ) : (
             <Carousel responsive={responsive}>
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
-              <ProductCard data={product} />
+              {products.map((related) => {
+                return <ProductCard data={related} />;
+              })}
             </Carousel>
           )}
         </div>

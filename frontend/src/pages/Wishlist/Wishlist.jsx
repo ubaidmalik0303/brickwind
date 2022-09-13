@@ -13,6 +13,7 @@ import {
 import { addItemsToCart } from "../../store/Actions/CartActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 import { REMOVE_FROM_WISHLIST_RESET } from "../../store/Constants/WishlistConstant";
+import SEO from "../../components/SEO/SEO";
 
 const Wishlist = () => {
   const { wishlist, loading, error } = useSelector(
@@ -57,6 +58,7 @@ const Wishlist = () => {
 
   return (
     <>
+      <SEO title="Wishlist - BrickWind" />
       <Breadcrumb name="WISHLIST" breadcrumbpath=" > Wishlist" />
       <div className={`container-fluid ${WishlistStyles.wishlist} p-3 p-md-5`}>
         {!wishlist[0] ? (

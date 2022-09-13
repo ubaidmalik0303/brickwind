@@ -1,0 +1,72 @@
+.orders * {
+    font-family: "Poppins", sans-serif;
+}
+
+.orders {
+    width: 100%;
+}
+
+.orders h2 {
+    font-weight: 700;
+}
+
+.orders table {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.orders table thead {
+    border-bottom: 1px solid grey;
+    background-color: black;
+}
+
+.orders table thead {
+    position: sticky;
+    top: 0;
+}
+
+.orders table thead tr th {
+    border-right: 1px solid grey;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.orders table tbody tr:nth-child(even) {
+    background-color: rgb(219, 215, 215);
+}
+
+.orders table tbody tr td {
+    font-weight: 300;
+    padding: 10px;
+    border-right: 1px solid grey;
+}
+
+.orderstatusgreen {
+    color: green;
+}
+
+.orderstatusred {
+    color: red;
+}
+
+.editbtn {
+    background-color: grey;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.editbtn:hover{
+    color: white;
+}
+
+.deletebtn {
+    background-color: black;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 10px;
+}

@@ -8,6 +8,15 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ALL_ORDERS_REQUEST,
+  ALL_ORDERS_SUCCESS,
+  ALL_ORDERS_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
+  UPDATE_ORDER_REQUEST,
+  UPDATE_ORDER_SUCCESS,
+  UPDATE_ORDER_FAIL,
   CLEAR_ERROR,
 } from "../Constants/OrderConstant";
 import { getAuthToken } from "../../utils/authTokenLocalStorage";
@@ -110,6 +119,101 @@ export const orderDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//all Orders Admin
+export const allOrders = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ALL_ORDERS_REQUEST,
+    });
+
+    const token = getAuthToken();
+
+    const config = {
+      headers: {
+        token,
+      },
+    };
+
+    const { data } = await axiosInstance.get("/api/v1/admin/orders", config);
+
+    dispatch({
+      type: ALL_ORDERS_SUCCESS,
+      payload: data.orders,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_ORDERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//update order admin
+export const updateOrder = (id, order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UPDATE_ORDER_REQUEST,
+    });
+
+    const token = getAuthToken();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        token,
+      },
+    };
+
+    const { data } = await axiosInstance.put(
+      `/api/v1/admin/order/${id}`,
+      order,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_ORDER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//delete order admin
+export const deleteOrder = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DELETE_ORDER_REQUEST,
+    });
+
+    const token = getAuthToken();
+
+    const config = {
+      headers: {
+        token,
+      },
+    };
+
+    const { data } = await axiosInstance.delete(
+      `/api/v1/admin/order/${id}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_ORDER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
       payload: error.response.data.message,
     });
   }

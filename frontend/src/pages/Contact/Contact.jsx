@@ -2,10 +2,14 @@ import React from "react";
 import ContactStyles from "./contact.module.css";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { FiPhone, FiMail, FiHome } from "react-icons/fi";
+import SEO from "../../components/SEO/SEO";
+import { useSelector } from "react-redux";
 
 const Contact = () => {
+  const { website } = useSelector((state) => state.getwebsitedetails);
   return (
     <>
+      <SEO title="Contact - BrickWind" />
       <Breadcrumb name="CONTACT US" breadcrumbpath={" > Contact"} auth="no" />
       <div className={`container-fluid ${ContactStyles.contact}`}>
         <div className="container py-5">
@@ -16,15 +20,15 @@ const Contact = () => {
                 <p>Contact Us We Are Available 24/7 For Your Services.</p>
                 <div>
                   <FiPhone size={30} />
-                  <a href="tel:+16826518211">+1 682 651 8211</a>
+                  <a href={`tel:${website?.contactno}`}>{website?.contactno}</a>
                 </div>
                 <div>
                   <FiMail size={30} />
-                  <a href="mailto:sales@brickwind.com">sales@brickwind.com</a>
+                  <a href={`mailto:${website?.email}`}>{website?.email}</a>
                 </div>
                 <div>
                   <FiHome size={30} />
-                  <span>30 N Gould St Ste 25404, Sheridan, Wyoming, 82801</span>
+                  <span>{website?.address}</span>
                 </div>
               </div>
               <h3 className={ContactStyles.ourlocation}>Our Location:</h3>

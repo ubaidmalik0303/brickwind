@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { myOrders, clearErrors } from "../../store/Actions/OrderActions";
 import { useAlert } from "react-alert";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../components/SEO/SEO";
 
 const MyOrders = () => {
   const { error, loading, orders } = useSelector((state) => state.myorders);
@@ -25,6 +26,8 @@ const MyOrders = () => {
 
   return (
     <>
+      <SEO title="My Orders - BrickWind" />
+
       <Breadcrumb name="MY ORDERS" breadcrumbpath=" > My Orders" />
       <div className={`container-fluid ${MyOrdersStyles.myorders} p-3 p-md-5`}>
         {loading ? (

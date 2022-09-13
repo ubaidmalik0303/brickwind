@@ -1,0 +1,53 @@
+.orderprocessing * {
+    font-family: "Poppins", sans-serif;
+}
+
+.orderprocessing h1 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.shippinginfo,
+.payment,
+.orderstatus,
+.orderitems {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+}
+
+.orderstatusred {
+    color: red;
+}
+
+.orderstatusgreen {
+    color: green;
+}
+
+.orderitems a {
+    text-decoration: none;
+    color: black;
+}
+
+.orderitem {
+    display: flex;
+    margin: 10px 0;
+}
+
+.processbox form {
+    width: 100%;
+}
+
+.processbox form select {
+    width: 100%;
+    margin: 50px 0;
+}
+
+.processbox form input[type=submit] {
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    outline: none;
+}

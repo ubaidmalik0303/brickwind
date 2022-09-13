@@ -28,3 +28,11 @@
   color: white;
 }
 
+@media screen and (max-width: 768px){
+  .sidebartab{
+    flex-direction: row;
+    overflow-x: scroll;
+    height: auto;
+  }
+}
+

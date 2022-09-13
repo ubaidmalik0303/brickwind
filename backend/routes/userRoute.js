@@ -18,9 +18,8 @@ const {
   getwishlist,
 } = require("../controllers/userController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
-const upload = require("../utils/imageUpload");
 
-router.route("/register").post(upload.single("avatar"), userRegister);
+router.route("/register").post(userRegister);
 router.route("/login").post(loginUser);
 router.route("/logout").get(logoutUser);
 router.route("/password/forgot").post(forgotPassword);
@@ -29,9 +28,7 @@ router.route("/my-account").get(isAuthenticatedUser, getUserDetails);
 router
   .route("/my-account/password/update")
   .put(isAuthenticatedUser, updateUserPassword);
-router
-  .route("/my-account/update")
-  .put(isAuthenticatedUser, upload.single("avatar"), updateUserProfile);
+router.route("/my-account/update").put(isAuthenticatedUser, updateUserProfile);
 router
   .route("/admin/users")
   .get(isAuthenticatedUser, authorizeRole("admin"), getAllUsers);

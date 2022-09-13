@@ -9,6 +9,7 @@ import { updateProfile, clearErrors } from "../../store/Actions/ProfileActions";
 import { loadUser } from "../../store/Actions/UserActions";
 import { UPDATE_PROFILE_RESET } from "../../store/Constants/ProfileConstants";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../components/SEO/SEO";
 
 const EditAccount = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const EditAccount = () => {
   }, [dispatch, error, alert, navigate, user, isUpdated]);
   return (
     <>
+      <SEO title="Edit Account - BrickWind" />
       <Breadcrumb name="EDIT ACCOUNT" breadcrumbpath={" > Edit Account"} />
       <div className={`container-fluid ${EditAccountStyles.editaccount}`}>
         <div className="container py-5">

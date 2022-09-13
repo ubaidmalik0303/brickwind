@@ -1,0 +1,31 @@
+.dashboard *{
+    font-family: "Poppins", sans-serif;
+}
+
+.totalsalesamount{
+    font-weight: 500;
+    font-size: 30px;
+    color: white;
+    margin: auto;
+}
+
+.summarybox{
+    display: flex;
+    justify-content: center;
+}
+
+.summarybox a{
+    border-radius: 5px;
+    background-color: red;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    text-decoration: none;
+    margin: 20px;
+}

@@ -5,6 +5,7 @@ import DummyMan from "../../assets/dummyman.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../store/Actions/UserActions";
+import SEO from "../../components/SEO/SEO";
 
 const MyAccount = () => {
   const { loading, user, isAdmin } = useSelector((state) => state.user);
@@ -16,6 +17,7 @@ const MyAccount = () => {
 
   return (
     <>
+      <SEO title="My Account - BrickWind" />
       <Breadcrumb name="MY ACCOUNT" />
       <div className={`container-fluid py-5 ${MyAccountStyles.myaccount}`}>
         {loading ? (

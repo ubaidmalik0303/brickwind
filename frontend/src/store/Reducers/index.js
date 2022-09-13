@@ -6,6 +6,8 @@ import {
   productReducer,
   searchProductReducer,
   newReviewReducer,
+  productReviewsReducer,
+  reviewReducer,
 } from "./ProductReducer";
 import {
   userReducer,
@@ -16,16 +18,24 @@ import {
 import { profileReducer } from "./ProfileReducer";
 import {
   allCategoriesReducer,
+  categoryDetailsReducer,
+  categoryReducer,
   createCategoryReducer,
   createSubCategoryReducer,
 } from "./CategoryReducer";
 import { cartReducer } from "./CartReducer";
 import { getWishlistReducer, wishlistReducer } from "./WishlistReducer";
 import {
+  allOrdersReducer,
   myOrdersReducer,
   newOrderReducer,
   orderDetailsReducer,
+  ordersReducer,
 } from "./OrderReducer";
+import {
+  getWebsiteDetailsReducer,
+  websiteDetailsReducer,
+} from "./WebsiteReducer/WebsiteReducer";
 
 export default combineReducers({
   products: AllProductReducer,
@@ -41,11 +51,19 @@ export default combineReducers({
   createcategory: createCategoryReducer,
   createsubcategory: createSubCategoryReducer,
   categories: allCategoriesReducer,
+  category: categoryReducer,
+  categorydetails: categoryDetailsReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
   getwishlist: getWishlistReducer,
   neworder: newOrderReducer,
   myorders: myOrdersReducer,
   orderdetails: orderDetailsReducer,
+  allorders: allOrdersReducer,
+  order: ordersReducer,
   newreview: newReviewReducer,
+  productreviews: productReviewsReducer,
+  review: reviewReducer,
+  websitedetails: websiteDetailsReducer,
+  getwebsitedetails: getWebsiteDetailsReducer,
 });

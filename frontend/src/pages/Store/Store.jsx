@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import StoreStyles from "./store.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { Accordion } from "react-bootstrap";
 import StorePath from "../../components/StorePath/StorePath";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +13,10 @@ import {
 } from "../../store/Actions/CategoryActions";
 import { useAlert } from "react-alert";
 import CategoriesList from "../../components/CategoriesCollapse/CategoriesList";
+import SEO from "../../components/SEO/SEO";
+import Form from "react-bootstrap/Form";
+import { FiBox } from "react-icons/fi";
+import MultiRangeSlider from "multi-range-slider-react";
 
 const Store = () => {
   const dispatch = useDispatch();
@@ -26,8 +29,20 @@ const Store = () => {
     categories,
   } = useSelector((state) => state.categories);
   const alert = useAlert();
+  const { category, subcategory } = useParams();
+  const [searchParams] = useSearchParams();
+  const keyword = !searchParams.get("keyword")
+    ? ""
+    : searchParams.get("keyword");
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [rating, setrating] = useState(0);
+  const [minValue, set_minValue] = useState(0);
+  const [maxValue, set_maxValue] = useState(1000);
+  const handleInput = (e) => {
+    set_minValue(e.minValue);
+    set_maxValue(e.maxValue);
+  };
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -44,9 +59,18 @@ const Store = () => {
       dispatch(catClearErrors());
     }
 
-    dispatch(getProducts("", currentPage));
+    dispatch(
+      getProducts(
+        keyword,
+        currentPage,
+        [minValue, maxValue],
+        category,
+        subcategory,
+        rating
+      )
+    );
     dispatch(allCategories());
-  }, [currentPage]);
+  }, [currentPage, category, subcategory, rating, keyword, minValue, maxValue]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,12 +78,56 @@ const Store = () => {
 
   return (
     <>
+      <SEO title="Store - BrickWind" />
       <StorePath />
       <div className={`container-fluid ${StoreStyles.store}`}>
         <div className="row">
           <div className="col-md-3">
-            <div className={`${StoreStyles.shopsidebar}`}>
-              <CategoriesList />
+            <div className={`${StoreStyles.shopsidebar} shadow`}>
+              <CategoriesList defaultOpen={true} />
+              <div className="py-4">
+                <span
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 500,
+                  }}
+                >
+                  Price:
+                </span>
+                <div className="py-2">
+                  <MultiRangeSlider
+                    min={0}
+                    max={1000}
+                    step={5}
+                    ruler={false}
+                    label={true}
+                    preventWheel={false}
+                    minValue={minValue}
+                    maxValue={maxValue}
+                    onInput={(e) => {
+                      handleInput(e);
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <span
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 500,
+                  }}
+                >
+                  Ratings:
+                </span>
+                <div className="px-4">
+                  <Form.Range
+                    defaultValue={0}
+                    min={0}
+                    max={5}
+                    onChange={(e) => setrating(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="col-md-9">
@@ -67,7 +135,10 @@ const Store = () => {
               {loading ? (
                 <SpinnerLoader />
               ) : !products[0] ? (
-                <h3>No Products Found!</h3>
+                <div className="container text-center py-5">
+                  <FiBox size={100} />
+                  <h4 className="my-4">No Products Found!</h4>
+                </div>
               ) : (
                 products.map((val, i) => {
                   return (

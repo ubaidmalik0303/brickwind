@@ -1,0 +1,63 @@
+.reviews *{
+    font-family: "Poppins", sans-serif;
+}
+
+.reviews form{
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews form input{
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: rgb(219, 216, 216);
+    margin: 10px 0;
+}
+
+.reviews form input[type=submit]{
+    background-color: black;
+    color: white;
+}
+
+.reviews table {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.reviews table thead {
+    border-bottom: 1px solid grey;
+    background-color: black;
+}
+
+.reviews table thead {
+    position: sticky;
+    top: 0;
+}
+
+.reviews table thead tr th {
+    border-right: 1px solid grey;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.reviews table tbody tr:nth-child(even) {
+    background-color: rgb(219, 215, 215);
+}
+
+.reviews table tbody tr td {
+    font-weight: 300;
+    padding: 10px;
+    border-right: 1px solid grey;
+}
+
+.deletebtn{
+    color: white;
+    background-color: black;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+

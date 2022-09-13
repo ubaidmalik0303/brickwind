@@ -32,6 +32,7 @@ const Header = () => {
   const { loading, categories, error } = useSelector(
     (state) => state.categories
   );
+  const { website } = useSelector((state) => state.getwebsitedetails);
 
   window.onscroll = () => {
     if (window.scrollY >= 60) {
@@ -97,7 +98,7 @@ const Header = () => {
           <Link to="/">
             <img
               className={headerStyles.logoimg}
-              src={BrickWindLogo}
+              src={website?.logo?.url}
               alt="BrickWind"
             />
           </Link>

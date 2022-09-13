@@ -1,10 +1,12 @@
 import React from "react";
 import AboutStyles from "./about.module.css";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import SEO from "../../components/SEO/SEO";
 
 const About = () => {
   return (
     <>
+      <SEO title="About - BrickWind" />
       <Breadcrumb name="ABOUT" breadcrumbpath=" > About" auth="no" />
       <div className={`container-fluid ${AboutStyles.about}`}>
         <div className="container">

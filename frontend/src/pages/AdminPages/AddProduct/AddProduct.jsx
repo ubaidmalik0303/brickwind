@@ -10,6 +10,7 @@ import { useAlert } from "react-alert";
 import { CREATE_PRODUCT_RESET } from "../../../store/Constants/ProductConstants";
 import { useNavigate } from "react-router-dom";
 import SpinnerLoader from "../../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../../components/SEO/SEO";
 
 const AddProduct = () => {
   const { loading, error, success } = useSelector(
@@ -115,119 +116,122 @@ const AddProduct = () => {
   }, [dispatch, alert, error, success, navigate, catError]);
 
   return (
-    <div className={AddProductStyles.addproduct}>
-      <div className="container">
-        <div className="row justify-content-center">
-          {loading || catLoading ? (
-            <SpinnerLoader />
-          ) : (
-            <div className="col-md-7">
-              <h2 className="text-center">Add Product</h2>
-              <form
-                onSubmit={createProductSubmitHandler}
-                encType="multipart/form-data"
-              >
-                <input
-                  type="text"
-                  placeholder="Enter Product Name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  value={name}
-                />
-                <textarea
-                  placeholder="Enter Product Discription"
-                  required
-                  rows={5}
-                  onChange={(e) => setDiscription(e.target.value)}
-                  value={discription}
-                ></textarea>
-                <span
-                  style={{
-                    fontSize: 12,
-                  }}
+    <>
+      <SEO title="Add Product - BrickWind" />
+      <div className={AddProductStyles.addproduct}>
+        <div className="container">
+          <div className="row justify-content-center">
+            {loading || catLoading ? (
+              <SpinnerLoader />
+            ) : (
+              <div className="col-md-7">
+                <h2 className="text-center">Add Product</h2>
+                <form
+                  onSubmit={createProductSubmitHandler}
+                  encType="multipart/form-data"
                 >
-                  Category:{" "}
-                </span>
-                <select onChange={categoryHandle}>
-                  <option value="">Select Category</option>
-                  {categories?.map((val, i) => {
-                    return (
-                      <option key={i} value={val.name}>
-                        {val.name}
-                      </option>
-                    );
-                  })}
-                </select>
-                {currentSubCategories[0] && (
-                  <>
-                    <span
-                      style={{
-                        fontSize: 12,
-                      }}
-                    >
-                      Sub-Category:{" "}
-                    </span>
-                    <select
-                      onChange={(e) => setSubCategory(e.target.value)}
-                      required
-                    >
-                      <option value="">Select Sub-Category</option>
-                      {currentSubCategories.map((val, i) => {
-                        return (
-                          <option value={val} key={i}>
-                            {val}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </>
-                )}
-                <input
-                  min={1}
-                  type="number"
-                  placeholder="Enter Product Price"
-                  required
-                  onChange={(e) => setPrice(e.target.value)}
-                  value={price}
-                />
-                <input
-                  min={1}
-                  type="number"
-                  placeholder="Enter Product Stock"
-                  required
-                  onChange={(e) => setStock(e.target.value)}
-                  value={stock}
-                />
-                <div className={AddProductStyles.addimagesbox}>
                   <input
-                    onChange={createProductImageChangeHandler}
-                    type="file"
-                    accept="image/*"
-                    multiple
+                    type="text"
+                    placeholder="Enter Product Name"
+                    onChange={(e) => setName(e.target.value)}
                     required
+                    value={name}
                   />
-                  <div>
-                    {imagesPreview.map((image, i) => {
+                  <textarea
+                    placeholder="Enter Product Discription"
+                    required
+                    rows={5}
+                    onChange={(e) => setDiscription(e.target.value)}
+                    value={discription}
+                  ></textarea>
+                  <span
+                    style={{
+                      fontSize: 12,
+                    }}
+                  >
+                    Category:{" "}
+                  </span>
+                  <select onChange={categoryHandle}>
+                    <option value="">Select Category</option>
+                    {categories?.map((val, i) => {
                       return (
-                        <img
-                          src={image}
-                          key={i}
-                          alt=""
-                          width={100}
-                          height={100}
-                          className="m-2"
-                        />
+                        <option key={i} value={val.name}>
+                          {val.name}
+                        </option>
                       );
                     })}
+                  </select>
+                  {currentSubCategories[0] && (
+                    <>
+                      <span
+                        style={{
+                          fontSize: 12,
+                        }}
+                      >
+                        Sub-Category:{" "}
+                      </span>
+                      <select
+                        onChange={(e) => setSubCategory(e.target.value)}
+                        required
+                      >
+                        <option value="">Select Sub-Category</option>
+                        {currentSubCategories.map((val, i) => {
+                          return (
+                            <option value={val} key={i}>
+                              {val}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </>
+                  )}
+                  <input
+                    min={1}
+                    type="number"
+                    placeholder="Enter Product Price"
+                    required
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
+                  />
+                  <input
+                    min={1}
+                    type="number"
+                    placeholder="Enter Product Stock"
+                    required
+                    onChange={(e) => setStock(e.target.value)}
+                    value={stock}
+                  />
+                  <div className={AddProductStyles.addimagesbox}>
+                    <input
+                      onChange={createProductImageChangeHandler}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      required
+                    />
+                    <div>
+                      {imagesPreview.map((image, i) => {
+                        return (
+                          <img
+                            src={image}
+                            key={i}
+                            alt=""
+                            width={100}
+                            height={100}
+                            className="m-2"
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-                <input type="submit" value="Create Product" />
-              </form>
-            </div>
-          )}
+                  <input type="submit" value="Create Product" />
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -40,27 +40,6 @@ exports.newOrder = catchAsyncError(async (req, res, next) => {
     await updateStock(item.product, item.quantity);
   });
 
-  const user = await User.findById(req.user._id);
-  orderItems.forEach((product) => {
-    if (user.purchasedItems[0]) {
-      const alreadyAdded = user.purchasedItems.filter(
-        (item) => item.product.toString() === product.product.toString()
-      );
-      if (alreadyAdded[0]) {
-        return;
-      } else {
-        user.purchasedItems.push({
-          product: product.product,
-        });
-      }
-    } else {
-      user.purchasedItems.push({
-        product: product.product,
-      });
-    }
-  });
-  await user.save();
-
   res.status(201).json({
     success: true,
     order,
@@ -123,8 +102,29 @@ exports.updateOrderStatus = catchAsyncError(async (req, res, next) => {
 
   order.orderStatus = req.body.status;
 
-  if (req.body.orderStatus === "Delivered") {
+  if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();
+
+    const user = await User.findById(order?.user);
+    order?.orderItems?.forEach((product) => {
+      if (user.purchasedItems[0]) {
+        const alreadyAdded = user.purchasedItems.filter(
+          (item) => item.product.toString() === product.product.toString()
+        );
+        if (alreadyAdded[0]) {
+          return;
+        } else {
+          user.purchasedItems.push({
+            product: product.product,
+          });
+        }
+      } else {
+        user.purchasedItems.push({
+          product: product.product,
+        });
+      }
+    });
+    await user.save();
   }
 
   await order.save({ validateBeforeSave: false });

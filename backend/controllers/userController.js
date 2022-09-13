@@ -6,6 +6,14 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendResetPasswordMail");
 const crypto = require("crypto");
 var fs = require("fs");
+const { storage } = require("../utils/firebase");
+const {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require("firebase/storage");
+var keygen = require("keygenerator");
 
 //Register A User
 exports.userRegister = catchAsyncError(async (req, res, next) => {
@@ -15,13 +23,25 @@ exports.userRegister = catchAsyncError(async (req, res, next) => {
     name,
     email,
     password,
-    avatar: {
-      public_id: req.file.filename,
-      url: "images/" + req.file.filename,
-    },
   });
 
-  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
+  const imageKey = keygen._();
+  const imageName =
+    user.name + imageKey + "." + req.files.avatar.mimetype.split("/")[1];
+
+  const imageRef = await ref(storage, `avatar/${imageName}`);
+  await uploadBytes(imageRef, req.files.avatar.data, {
+    contentType: req.files.avatar.mimetype,
+  });
+  await getDownloadURL(imageRef).then((url) => {
+    user.avatar = {
+      public_id: imageName,
+      url,
+    };
+  });
+
+  await user.save();
+
   sendToken(res, 201, user);
 });
 
@@ -42,7 +62,6 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Invalid Email or Password", 401));
   }
 
-  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
   sendToken(res, 200, user);
 });
 
@@ -72,9 +91,10 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  // const resetPasswordUrl = `${req.protocol}://${req.get(
+  //   "host"
+  // )}/api/v1/password/reset/${resetToken}`;
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
   const message = `Your Password Reset Token Is: \n\n ${resetPasswordUrl} \n\n If You Have Not Requested This Email Then Please Ignore It.`;
 
@@ -138,8 +158,6 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
-  user.avatar.url = process.env.HOST_NAME + user.avatar.url;
-
   res.status(200).json({
     success: true,
     user,
@@ -176,16 +194,27 @@ exports.updateUserProfile = catchAsyncError(async (req, res, next) => {
     email: req.body.email,
   };
 
-  if (req.body.avatar !== "") {
+  if (req.files) {
     const user = await User.findById(req.user.id);
 
-    userNewDetails.avatar = {
-      public_id: req.file.filename,
-      url: "images/" + req.file.filename,
-    };
+    //Delete Old Image
+    const deleteRef = await ref(storage, `avatar/${user.avatar.public_id}`);
+    await deleteObject(deleteRef);
 
-    fs.unlink(`uploads/${req.user.avatar.public_id}`, function (err) {
-      if (err) throw err;
+    //Upload New Image
+    const imageKey = keygen._();
+    const imageName =
+      user.name + imageKey + "." + req.files.avatar.mimetype.split("/")[1];
+
+    const imageRef = await ref(storage, `avatar/${imageName}`);
+    await uploadBytes(imageRef, req.files.avatar.data, {
+      contentType: req.files.avatar.mimetype,
+    });
+    await getDownloadURL(imageRef).then((url) => {
+      userNewDetails.avatar = {
+        public_id: imageName,
+        url,
+      };
     });
   }
 
@@ -248,9 +277,9 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
     );
   }
 
-  fs.unlink(`uploads/${user.avatar.public_id}`, function (err) {
-    if (err) throw err;
-  });
+  //Delete Image
+  const deleteRef = await ref(storage, `avatar/${user.avatar.public_id}`);
+  await deleteObject(deleteRef);
 
   await user.remove();
 
@@ -289,12 +318,6 @@ exports.removefromwishlist = catchAsyncError(async (req, res, next) => {
 //get Wishlist
 exports.getwishlist = catchAsyncError(async (req, res, next) => {
   const wishlist = await Product.find({ _id: { $in: req.user.wishlist } });
-
-  wishlist?.forEach((product) => {
-    product?.images?.forEach((val) => {
-      val.url = process.env.HOST_NAME + val.url;
-    });
-  });
 
   res.status(200).json({
     success: true,

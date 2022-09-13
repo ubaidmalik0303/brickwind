@@ -118,7 +118,7 @@ const ProductCard = ({ data }) => {
           classNames="mx-1"
           count={5}
           edit={false}
-          value={4 + Math.random() * 1}
+          value={data.ratings}
         />
         <span className={`${ProductCardStyles.price} px-1`}>
           ${data.price}.00

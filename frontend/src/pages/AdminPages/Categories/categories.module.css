@@ -55,3 +55,11 @@
   font-weight: 300;
   padding: 10px;
 }
+
+.categories table > tbody > tr > td > button{
+  background-color: grey;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 10px;
+}

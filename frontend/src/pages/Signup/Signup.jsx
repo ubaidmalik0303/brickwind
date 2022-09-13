@@ -8,6 +8,7 @@ import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { register, clearErrors } from "../../store/Actions/UserActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../components/SEO/SEO";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ const Signup = () => {
 
   return (
     <>
+      <SEO title="Signup - BrickWind" />
       <Breadcrumb name="SIGNUP" breadcrumbpath={" > Signup"} auth="no" />
       <div className={`container-fluid ${SignupStyles.signup}`}>
         <div className="container py-5">

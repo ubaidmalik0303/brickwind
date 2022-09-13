@@ -12,7 +12,6 @@ const {
   getAdminProducts,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
-const upload = require("../utils/imageUpload");
 
 //Routes For Product
 router.route("/products").get(getAllProducts);
@@ -24,7 +23,6 @@ router
   .post(
     isAuthenticatedUser,
     authorizeRole("admin"),
-    upload.array("images"),
     createProduct
   );
 router
@@ -32,7 +30,6 @@ router
   .put(
     isAuthenticatedUser,
     authorizeRole("admin"),
-    upload.array("images"),
     updateProduct
   );
 router

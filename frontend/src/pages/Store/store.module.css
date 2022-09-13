@@ -1,6 +1,11 @@
+.store * {
+  font-family: "Poppins", sans-serif;
+}
+
 .shopsidebar {
   position: sticky;
   top: 70px;
+  padding: 10px;
 }
 
 .categorylist {
@@ -44,15 +49,15 @@
   padding: 0;
 } */
 
-.paginationitem:first-child .paginationlink{
+.paginationitem:first-child .paginationlink {
   border-radius: 5px 0 0 5px;
 }
 
-.paginationitem:last-child .paginationlink{
+.paginationitem:last-child .paginationlink {
   border-radius: 0 5px 5px 0;
 }
 
-.paginationlink{
+.paginationlink {
   color: black;
   font-weight: 700;
   font-size: 18px;
@@ -61,12 +66,12 @@
   border: 1px solid black;
 }
 
-.paginationlink:hover{
+.paginationlink:hover {
   color: white;
   background-color: black;
 }
 
-.paginationlinkactive{
+.paginationlinkactive {
   background-color: black;
   color: white;
 }

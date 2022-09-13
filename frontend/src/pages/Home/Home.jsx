@@ -10,13 +10,12 @@ import {
   FiCornerUpLeft,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { clearErrors, getProducts } from "../../store/Actions/ProductActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 import CategoriesCollapse from "../../components/CategoriesCollapse/CategoriesCollapse";
-
+import SEO from "../../components/SEO/SEO";
 
 const Home = () => {
   const alert = useAlert();
@@ -27,6 +26,7 @@ const Home = () => {
     categories,
     error: catError,
   } = useSelector((state) => state.categories);
+  const { website } = useSelector((state) => state.getwebsitedetails);
 
   const responsive = {
     superLargeDesktop: {
@@ -64,10 +64,13 @@ const Home = () => {
 
   return (
     <>
-      <Helmet title="BrickWind" />
+      <SEO title="BrickWind" />
       <div className={`${HomeStyles.hero} w-100`}>
         <div className={HomeStyles.tarnsparent}></div>
-        <div className={HomeStyles.banner}>
+        <div
+          className={HomeStyles.banner}
+          style={{ background: `url('${website?.banner?.url}')` }}
+        >
           <div className={HomeStyles.content}>
             <h2>Home & Kitchen trends</h2>
             <h3>GET UPTO 30% OFF</h3>
@@ -131,7 +134,7 @@ const Home = () => {
               <p>See all and find yours</p>
               <ThemeLinkButton
                 title="Shop By Furniture"
-                link="/store/Home & Kicthen/Furniture"
+                link="/store"
                 style={{
                   padding: "15px 30px",
                   fontSize: 14,
@@ -154,7 +157,7 @@ const Home = () => {
               <p>See all and find yours</p>
               <ThemeLinkButton
                 title="Shop By Kitchen & Dining"
-                link="/store/Home & Kicthen/Kitchen & Dining"
+                link="/store"
                 style={{
                   padding: "15px 10px",
                   fontSize: 14,
@@ -181,7 +184,7 @@ const Home = () => {
               <p>See all and find yours</p>
               <ThemeLinkButton
                 title="Shop By Home-Decor"
-                link="/store/Home & Kicthen/Home Decor"
+                link="/store"
                 style={{
                   padding: "15px 30px",
                   fontSize: 14,
@@ -207,7 +210,7 @@ const Home = () => {
               <p>See all and find yours</p>
               <ThemeLinkButton
                 title="Shop By Seasonal Decor"
-                link="/store/Home & Kicthen/Seasonal Decor"
+                link="/store"
                 style={{
                   padding: "15px 10px",
                   fontSize: 14,

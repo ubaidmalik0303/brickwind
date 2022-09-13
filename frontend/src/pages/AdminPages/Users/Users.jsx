@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import UsersStyles from "./users.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +13,7 @@ import {
 } from "../../../store/Constants/UserConstants";
 import { useAlert } from "react-alert";
 import SpinnerLoader from "../../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../../components/SEO/SEO";
 
 const Users = () => {
   const { error, loading, users } = useSelector((state) => state.allusers);
@@ -68,72 +69,84 @@ const Users = () => {
     }
 
     dispatch(getAllusers());
-  }, [error, dispatch, alert, isUpdated, updateError, isDeleted, deleteError]);
+  }, [
+    error,
+    dispatch,
+    alert,
+    isUpdated,
+    updateError,
+    isDeleted,
+    deleteError,
+    message,
+  ]);
   return (
-    <div className={UsersStyles.users}>
-      <h2 className="text-center my-3">All Users</h2>
-      <div className={UsersStyles.usersoptions}>
-        <form>
+    <>
+      <SEO title="Users - BrickWind" />
+      <div className={UsersStyles.users}>
+        <h2 className="text-center my-3">All Users</h2>
+        <div className={UsersStyles.usersoptions}>
+          {/* <form>
           <input type="text" placeholder="Search By Email" />
           <input type="submit" value="Search" />
-        </form>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            {user.superAdmin && <th>Actions</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {loading || updateLoading || deleteLoading ? (
-            <SpinnerLoader />
-          ) : (
-            users &&
-            users.map((item, i) => {
-              return (
-                !item.superAdmin && (
-                  <tr key={i}>
-                    <td>{item._id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>
-                      {user.superAdmin ? (
-                        <select
-                          onChange={(e) => changeUserRoleHandler(e, item._id)}
-                        >
-                          <option value={item.role}>{item.role}</option>
-                          <option
-                            value={item.role === "admin" ? "user" : "admin"}
-                          >
-                            {item.role === "admin" ? "user" : "admin"}
-                          </option>
-                        </select>
-                      ) : (
-                        item.role
-                      )}
-                    </td>
-                    {user.superAdmin && (
+        </form> */}
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>User Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              {user.superAdmin && <th>Actions</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {loading || updateLoading || deleteLoading ? (
+              <SpinnerLoader />
+            ) : (
+              users &&
+              users.map((item, i) => {
+                return (
+                  !item.superAdmin && (
+                    <tr key={i}>
+                      <td>{item._id}</td>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
                       <td>
-                        <button
-                          className={UsersStyles.userdeletebtn}
-                          onClick={(e) => deleteUserHandler(e, item._id)}
-                        >
-                          Delete
-                        </button>
+                        {user.superAdmin ? (
+                          <select
+                            onChange={(e) => changeUserRoleHandler(e, item._id)}
+                          >
+                            <option value={item.role}>{item.role}</option>
+                            <option
+                              value={item.role === "admin" ? "user" : "admin"}
+                            >
+                              {item.role === "admin" ? "user" : "admin"}
+                            </option>
+                          </select>
+                        ) : (
+                          item.role
+                        )}
                       </td>
-                    )}
-                  </tr>
-                )
-              );
-            })
-          )}
-        </tbody>
-      </table>
-    </div>
+                      {user.superAdmin && (
+                        <td>
+                          <button
+                            className={UsersStyles.userdeletebtn}
+                            onClick={(e) => deleteUserHandler(e, item._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  )
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

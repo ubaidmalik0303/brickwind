@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { forgotPassword, clearErrors } from "../../store/Actions/UserActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../components/SEO/SEO";
 
 const ForgotPassword = () => {
   const alert = useAlert();
@@ -40,6 +41,7 @@ const ForgotPassword = () => {
 
   return (
     <>
+      <SEO title="Forgot Password - BrickWind" />
       <Breadcrumb
         name="FORGOT PASSWORD"
         breadcrumbpath=" > Forgot Password"

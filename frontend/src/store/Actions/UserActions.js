@@ -13,6 +13,9 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
   LIST_ALL_USERS_REQUEST,
   LIST_ALL_USERS_SUCCESS,
   LIST_ALL_USERS_FAIL,
@@ -60,6 +63,8 @@ export const register = (userData) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
 
     const config = { headers: { "Content-type": "multipart/form-data" } };
+
+    console.log(userData.get("avatar"));
 
     const { data } = await axiosInstance.post(
       "api/v1/register",
@@ -139,6 +144,33 @@ export const forgotPassword = (email) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Reset Password
+export const resetPassword = (token, password) => async (dispatch) => {
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "multipart/json" },
+    };
+
+    const { data } = await axiosInstance.put(
+      `/api/v1/password/reset/${token}`,
+      password,
+      config
+    );
+
+    dispatch({
+      type: RESET_PASSWORD_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_FAIL,
       payload: error.response.data.message,
     });
   }

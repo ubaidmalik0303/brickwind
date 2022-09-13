@@ -9,6 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { UPDATE_PASSWORD_RESET } from "../../store/Constants/ProfileConstants";
 import { useAlert } from "react-alert";
+import SEO from "../../components/SEO/SEO";
+import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
 
 const ChangePassword = () => {
   const { error, loading, isUpdated } = useSelector((state) => state.profile);
@@ -48,39 +50,46 @@ const ChangePassword = () => {
 
   return (
     <>
+      <SEO title="Change Password - BrickWind" />
       <Breadcrumb name="CHANGE PASSWORD" breadcrumbpath=" > Change Password" />
       <div className={`container-fluid ${ChangePasswordStyles.changepassword}`}>
         <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-md-6 shadow px-4 py-5">
-              <h2>Update Password</h2>
-              <form
-                onSubmit={updatePasswordSubmit}
-                encType="multipart/form-data"
-              >
-                <input
-                  type="password"
-                  name="old password"
-                  required
-                  onChange={(e) => setOldPassword(e.target.value)}
-                  placeholder="Enter Your Old Password"
-                />
-                <input
-                  type="password"
-                  name="new password"
-                  required
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter Your New Password"
-                />
-                <input
-                  type="password"
-                  name="confirm new password"
-                  required
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                  placeholder="Confirm Your New Password"
-                />
-                <input type="submit" value="Update" />
-              </form>
+              {loading ? (
+                <SpinnerLoader />
+              ) : (
+                <>
+                  <h2>Update Password</h2>
+                  <form
+                    onSubmit={updatePasswordSubmit}
+                    encType="multipart/form-data"
+                  >
+                    <input
+                      type="password"
+                      name="old password"
+                      required
+                      onChange={(e) => setOldPassword(e.target.value)}
+                      placeholder="Enter Your Old Password"
+                    />
+                    <input
+                      type="password"
+                      name="new password"
+                      required
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter Your New Password"
+                    />
+                    <input
+                      type="password"
+                      name="confirm new password"
+                      required
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      placeholder="Confirm Your New Password"
+                    />
+                    <input type="submit" value="Update" />
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </div>

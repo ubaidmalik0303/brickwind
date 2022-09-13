@@ -7,6 +7,7 @@ import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { login, clearErrors } from "../../store/Actions/UserActions";
 import SpinnerLoader from "../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../components/SEO/SEO";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const Login = () => {
 
   return (
     <>
+      <SEO title="Login - BrickWind" />
       <Breadcrumb name="LOGIN" breadcrumbpath=" > Login" auth="no" />
       <div className={`container-fluid ${LoginStyle.login}`}>
         <div className="container py-5">

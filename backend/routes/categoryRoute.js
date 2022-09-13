@@ -4,18 +4,20 @@ const {
   createCategory,
   createSubCategory,
   allCategories,
+  editcategory,
+  categoryDetails,
+  deleteCategory,
 } = require("../controllers/categoryController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
-const upload = require("../utils/imageUpload");
 
 router
   .route("/admin/category/new")
-  .post(
-    isAuthenticatedUser,
-    authorizeRole("admin"),
-    upload.single("image"),
-    createCategory
-  );
+  .post(isAuthenticatedUser, authorizeRole("admin"), createCategory);
+router
+  .route("/admin/category/:id")
+  .get(isAuthenticatedUser, authorizeRole("admin"), categoryDetails)
+  .put(isAuthenticatedUser, authorizeRole("admin"), editcategory)
+  .delete(isAuthenticatedUser, authorizeRole("admin"), deleteCategory);
 router
   .route("/admin/subcategory/new/:id")
   .put(isAuthenticatedUser, authorizeRole("admin"), createSubCategory);

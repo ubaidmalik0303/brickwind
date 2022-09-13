@@ -13,6 +13,7 @@ import {
   CREATE_SUBCATEGORY_RESET,
 } from "../../../store/Constants/CategoryConstant";
 import SpinnerLoader from "../../../components/SpinnerLoader/SpinnerLoader";
+import SEO from "../../../components/SEO/SEO";
 
 const AddCategory = () => {
   const alert = useAlert();
@@ -100,78 +101,84 @@ const AddCategory = () => {
       dispatch({
         type: CREATE_SUBCATEGORY_RESET,
       });
+      setSubCategory("");
+      setCategoryID("");
     }
 
     dispatch(allCategories());
   }, [dispatch, error, success, catError, subCatError, subCatSuccess]);
 
   return (
-    <div className={AddCategoryStyles.addcategory}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-7">
-            <h2 className="text-center">Add Category</h2>
-            {loading || subCatLoading ? (
-              <SpinnerLoader />
-            ) : (
-              <form
-                onSubmit={createCategoryHandle}
-                encType="multipart/form-data"
-              >
-                <input
-                  type="text"
-                  placeholder="Enter Category Name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  value={name}
-                />
-                <input onChange={categoryImageHandle} type="file" required />
-                {imagePreview && (
-                  <img
-                    src={imagePreview}
-                    alt="Category image"
-                    width={100}
-                    height={100}
+    <>
+      <SEO title="Add Category - BrickWind" />
+
+      <div className={AddCategoryStyles.addcategory}>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-md-7">
+              <h2 className="text-center">Add Category</h2>
+              {loading || subCatLoading ? (
+                <SpinnerLoader />
+              ) : (
+                <form
+                  onSubmit={createCategoryHandle}
+                  encType="multipart/form-data"
+                >
+                  <input
+                    type="text"
+                    placeholder="Enter Category Name"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    value={name}
                   />
-                )}
-                <input type="submit" value="Create Category" />
-              </form>
-            )}
+                  <input onChange={categoryImageHandle} type="file" required />
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="Category image"
+                      width={100}
+                      height={100}
+                    />
+                  )}
+                  <input type="submit" value="Create Category" />
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="container mt-5">
+          <div className="row justify-content-center">
+            <div className="col-md-7">
+              <h2 className="text-center">Add Sub-Category</h2>
+              {catLoading || loading || subCatLoading ? (
+                <SpinnerLoader />
+              ) : (
+                <form onSubmit={createSubCategoryHandle}>
+                  <select onChange={(e) => setCategoryID(e.target.value)}>
+                    <option value="">Select Any Category</option>
+                    {categories.map((cat, i) => {
+                      return (
+                        <option key={i} value={cat._id}>
+                          {cat.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Enter Sub-Category Name"
+                    required
+                    onChange={(e) => setSubCategory(e.target.value)}
+                    value={subCategory}
+                  />
+                  <input type="submit" value="Create Sub-Category" />
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-7">
-            <h2 className="text-center">Add Sub-Category</h2>
-            {catLoading || loading || subCatLoading ? (
-              <SpinnerLoader />
-            ) : (
-              <form onSubmit={createSubCategoryHandle}>
-                <select onChange={(e) => setCategoryID(e.target.value)}>
-                  <option value="">Select Any Category</option>
-                  {categories.map((cat, i) => {
-                    return (
-                      <option key={i} value={cat._id}>
-                        {cat.name}
-                      </option>
-                    );
-                  })}
-                </select>
-                <input
-                  type="text"
-                  placeholder="Enter Sub-Category Name"
-                  required
-                  onChange={(e) => setSubCategory(e.target.value)}
-                  value={subCategory}
-                />
-                <input type="submit" value="Create Sub-Category" />
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
