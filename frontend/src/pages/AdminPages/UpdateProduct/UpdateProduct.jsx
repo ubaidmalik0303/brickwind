@@ -242,7 +242,7 @@ const UpdateProduct = () => {
                             <img
                               src={image.url}
                               key={i}
-                              alt=""
+                              alt="Products"
                               width={100}
                               height={100}
                               className="m-2"
@@ -256,7 +256,7 @@ const UpdateProduct = () => {
                           <img
                             src={image}
                             key={i}
-                            alt=""
+                            alt="Products"
                             width={100}
                             height={100}
                             className="m-2"

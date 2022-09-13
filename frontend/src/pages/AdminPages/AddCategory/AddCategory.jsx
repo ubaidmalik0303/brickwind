@@ -135,7 +135,7 @@ const AddCategory = () => {
                   {imagePreview && (
                     <img
                       src={imagePreview}
-                      alt="Category image"
+                      alt="Category"
                       width={100}
                       height={100}
                     />

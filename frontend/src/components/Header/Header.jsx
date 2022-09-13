@@ -154,7 +154,7 @@ const Header = () => {
                     <div>
                       <img
                         src={categories[currentCatIndex]?.image?.url}
-                        alt=""
+                        alt={categories[currentCatIndex]?.name}
                         width={150}
                         height={150}
                         className="shadow"

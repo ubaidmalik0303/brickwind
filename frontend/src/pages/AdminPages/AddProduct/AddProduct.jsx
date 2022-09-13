@@ -215,7 +215,7 @@ const AddProduct = () => {
                           <img
                             src={image}
                             key={i}
-                            alt=""
+                            alt="Products"
                             width={100}
                             height={100}
                             className="m-2"

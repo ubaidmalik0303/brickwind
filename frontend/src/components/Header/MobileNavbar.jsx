@@ -9,9 +9,7 @@ import { useSelector } from "react-redux";
 
 const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
   const navigate = useNavigate();
-  const {
-    website,
-  } = useSelector((state) => state.getwebsitedetails);
+  const { website } = useSelector((state) => state.getwebsitedetails);
 
   useEffect(() => {
     setIsShow(false);
@@ -35,7 +33,12 @@ const MobileNavbar = ({ isShow, showFunc, setIsShow, categories }) => {
       />
       <div className={headerStyles.mobilenavcontent}>
         <h2>
-          <img src={website?.logo?.url} width={150} height={70} alt="" />
+          <img
+            src={website?.logo?.url}
+            width={150}
+            height={70}
+            alt={website?.websitename}
+          />
         </h2>
         <ul>
           <li>

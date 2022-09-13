@@ -104,7 +104,7 @@ const Home = () => {
                         <div className={HomeStyles.categoryimagehover}></div>
                         <img
                           src={val.image.url}
-                          alt=""
+                          alt={val?.name}
                           width={180}
                           height={180}
                         />

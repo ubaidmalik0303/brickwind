@@ -37,7 +37,7 @@ const MyAccount = () => {
             </button>
             <img
               src={user?.avatar ? user.avatar.url : DummyMan}
-              alt={user.name}
+              alt={user?.name}
             />
             <br />
             <h2>{user.name}</h2>

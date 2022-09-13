@@ -143,7 +143,7 @@ const Settings = () => {
                   {logoPreview && (
                     <img
                       src={logoPreview}
-                      alt="BrickWind"
+                      alt={website?.websitename}
                       width={100}
                       height={100}
                     />
@@ -159,7 +159,7 @@ const Settings = () => {
                   {bannerPreview && (
                     <img
                       src={bannerPreview}
-                      alt="BrickWind"
+                      alt={website?.websitename}
                       width={100}
                       height={100}
                     />

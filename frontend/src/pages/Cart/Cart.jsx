@@ -56,7 +56,7 @@ const Cart = () => {
                     <tr key={i}>
                       <td>
                         <div>
-                          <img src={val.image} alt="" />
+                          <img src={val.image} alt={val?.name} />
                           <FiX
                             color="black"
                             size={20}

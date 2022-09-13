@@ -85,7 +85,12 @@ const ProductCard = ({ data }) => {
     >
       <div className={ProductCardStyles.productCard}>
         <div className={ProductCardStyles.upperBody}>
-          <img src={data.images[0].url} height={180} width={180} alt="" />
+          <img
+            src={data.images[0].url}
+            height={180}
+            width={180}
+            alt={data?.name}
+          />
           <div className={ProductCardStyles.hoverCard}>
             <FiArrowRight
               className={ProductCardStyles.rightArrow}

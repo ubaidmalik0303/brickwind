@@ -102,7 +102,7 @@ const EditAccount = () => {
                       placeholder="Enter Email"
                       value={email}
                     />
-                    <img src={avatarPreview} alt="Profile Pricture" />
+                    <img src={avatarPreview} alt={user?.name} />
                     <input
                       onChange={updateProfileDataChange}
                       type="file"

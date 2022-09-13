@@ -247,7 +247,7 @@ const ProductPage = () => {
                     src={mainImage === "" ? product.images[0].url : mainImage}
                     className="w-100"
                     height={500}
-                    alt=""
+                    alt={product?.name}
                   />
                   <hr />
                   <div className={ProductPageStyles.productimagesrow}>
@@ -257,7 +257,7 @@ const ProductPage = () => {
                           onClick={() => changeMainImage(val.url)}
                           key={i}
                           src={val.url}
-                          alt=""
+                          alt={product?.name}
                           width={100}
                           height={100}
                         />
