@@ -29,6 +29,7 @@ const orderRoute = require("./routes/orderRoutes");
 const categoryRoute = require("./routes/categoryRoute");
 const paymentRoute = require("./routes/paymentRoute");
 const websiteRoute = require("./routes/websiteRoute");
+const contactRoute = require("./routes/contactusRoute");
 
 app.use("/api/v1", productRoute);
 app.use("/api/v1", userRoute);
@@ -36,6 +37,7 @@ app.use("/api/v1", orderRoute);
 app.use("/api/v1", categoryRoute);
 app.use("/api/v1", paymentRoute);
 app.use("/api/v1", websiteRoute);
+app.use("/api/v1", contactRoute);
 
 //Middleware For Error
 app.use(errorMiddleware);

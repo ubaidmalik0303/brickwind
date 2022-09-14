@@ -1,12 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContactStyles from "./contact.module.css";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import { FiPhone, FiMail, FiHome } from "react-icons/fi";
 import SEO from "../../components/SEO/SEO";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import { contactUs, clearErrors } from "../../store/Actions/ContactUSAction";
+import { CONTACTUS_MAIL_RESET } from "../../store/Constants/ContactUsConstant";
 
 const Contact = () => {
   const { website } = useSelector((state) => state.getwebsitedetails);
+  const {
+    loading,
+    success,
+    message: successMessage,
+    error,
+  } = useSelector((state) => state.contactus);
+  const dispatch = useDispatch();
+  const alert = useAlert();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const contactUsSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("subject", subject);
+    myForm.set("message", message);
+
+    dispatch(contactUs(myForm));
+
+    setEmail("");
+    setSubject("");
+    setName("");
+    setMessage("");
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      alert.success(successMessage);
+      dispatch({
+        type: CONTACTUS_MAIL_RESET,
+      });
+    }
+  }, [dispatch, success, error, alert, successMessage]);
   return (
     <>
       <SEO title="Contact - BrickWind" />
@@ -42,22 +89,47 @@ const Contact = () => {
               ></iframe>
             </div>
             <div className="col-lg-6">
-              <form className="shadow px-4 py-5" encType="multipart/form-data">
+              <form
+                className="shadow px-4 py-5"
+                onSubmit={contactUsSubmitHandler}
+              >
                 <h2>Contact Us</h2>
-                <input type="text" name="name" placeholder="Your Name" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  value={name}
+                />
                 <input
                   type="email"
                   name="email"
                   placeholder="Your Email Adress"
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  value={email}
                 />
                 <input
                   type="text"
-                  name="number"
-                  placeholder="Your Phone Number"
+                  name="subject"
+                  placeholder="Subject"
+                  onChange={(e) => setSubject(e.target.value)}
+                  required
+                  value={subject}
                 />
-                <input type="text" name="subject" placeholder="Subject" />
-                <textarea name="message" placeholder="Message"></textarea>
-                <input type="submit" value="Send" />
+                <textarea
+                  name="message"
+                  placeholder="Message"
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  value={message}
+                ></textarea>
+                <input
+                  type="submit"
+                  value={loading ? "Sending..." : "Send"}
+                  disabled={loading ? true : false}
+                />
               </form>
             </div>
           </div>

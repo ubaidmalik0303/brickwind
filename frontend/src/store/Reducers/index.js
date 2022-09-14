@@ -36,6 +36,7 @@ import {
   getWebsiteDetailsReducer,
   websiteDetailsReducer,
 } from "./WebsiteReducer/WebsiteReducer";
+import { contactUsReducer } from "./ContactUsReducer";
 
 export default combineReducers({
   products: AllProductReducer,
@@ -66,4 +67,5 @@ export default combineReducers({
   review: reviewReducer,
   websitedetails: websiteDetailsReducer,
   getwebsitedetails: getWebsiteDetailsReducer,
+  contactus: contactUsReducer,
 });
