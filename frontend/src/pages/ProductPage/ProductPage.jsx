@@ -400,7 +400,9 @@ const ProductPage = () => {
           ) : (
             <Carousel responsive={responsive}>
               {products.map((related) => {
-                return <ProductCard data={related} />;
+                if (related._id !== product._id) {
+                  return <ProductCard data={related} />;
+                }
               })}
             </Carousel>
           )}

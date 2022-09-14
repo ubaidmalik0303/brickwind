@@ -11,7 +11,6 @@ import SEO from "../../components/SEO/SEO";
 
 const MyOrders = () => {
   const { error, loading, orders } = useSelector((state) => state.myorders);
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const alert = useAlert();
 
