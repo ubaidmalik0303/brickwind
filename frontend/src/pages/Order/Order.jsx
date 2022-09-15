@@ -19,7 +19,8 @@ const Order = () => {
   );
   // const shippingCharges = subTotal > 500 ? 0 : 5;
   const shippingCharges = 0;
-  const tax = Number((subTotal * 0.18).toFixed(2));
+  // const tax = Number((subTotal * 0.18).toFixed(2));
+  const tax = 0;
   const totalPrice = Number(subTotal + tax + shippingCharges);
 
   const address = `${shippingInfo?.address}, ${shippingInfo?.city}, ${shippingInfo?.state}, ${shippingInfo?.pincode}, ${shippingInfo?.country}`;
