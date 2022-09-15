@@ -11,6 +11,11 @@ import {
 import SEO from "../../components/SEO/SEO";
 
 const Cart = () => {
+  const stringShort = (string) => {
+    const newStr = string.slice(0, 50);
+    return newStr + ".....";
+  };
+
   const dispatch = useDispatch();
   let { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
@@ -63,7 +68,7 @@ const Cart = () => {
                             onClick={() => handleRemoveItem(val.product)}
                           />
                         </div>
-                        <p>{val.name}</p>
+                        <p>{stringShort(val.name)}</p>
                       </td>
                       <td>
                         <span className={CartStyles.mobileheading}>PRICE:</span>

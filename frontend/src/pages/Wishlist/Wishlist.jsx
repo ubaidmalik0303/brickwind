@@ -16,6 +16,12 @@ import { REMOVE_FROM_WISHLIST_RESET } from "../../store/Constants/WishlistConsta
 import SEO from "../../components/SEO/SEO";
 
 const Wishlist = () => {
+
+  const stringShort = (string) => {
+    const newStr = string.slice(0, 50);
+    return newStr + ".....";
+  };
+
   const { wishlist, loading, error } = useSelector(
     (state) => state.getwishlist
   );
@@ -102,7 +108,7 @@ const Wishlist = () => {
                               }
                             />
                           </div>
-                          <p>{product?.name}</p>
+                          <p>{stringShort(product?.name)}</p>
                         </td>
                         <td>
                           <span>${product?.price}</span>
