@@ -225,4 +225,9 @@
     height: 25px;
     margin: 0 5px;
   }
+
+  .logoimg {
+    width: 100px;
+    height: 35px;
+  }
 }
