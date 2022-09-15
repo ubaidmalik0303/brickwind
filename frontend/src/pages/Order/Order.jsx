@@ -17,7 +17,8 @@ const Order = () => {
     (acc, item) => acc + item.quantity * item.price,
     0
   );
-  const shippingCharges = subTotal > 500 ? 0 : 5;
+  // const shippingCharges = subTotal > 500 ? 0 : 5;
+  const shippingCharges = 0;
   const tax = Number((subTotal * 0.18).toFixed(2));
   const totalPrice = Number(subTotal + tax + shippingCharges);
 
