@@ -83,6 +83,8 @@ const AddProduct = () => {
       alert.error("Please Select Any Category");
     } else if (subCategory === "") {
       alert.error("Please Select Sub-Category");
+    } else if (images.length < 2) {
+      alert.error("Please Choose Atleast 2 Images");
     } else {
       dispatch(createProduct(myForm));
     }

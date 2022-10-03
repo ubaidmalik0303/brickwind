@@ -126,7 +126,7 @@ const AddCategory = () => {
                 >
                   <input
                     type="text"
-                    placeholder="Enter Category Name"
+                    placeholder="Enter Category Name (Don't Use &)"
                     onChange={(e) => setName(e.target.value)}
                     required
                     value={name}
@@ -166,7 +166,7 @@ const AddCategory = () => {
                   </select>
                   <input
                     type="text"
-                    placeholder="Enter Sub-Category Name"
+                    placeholder="Enter Sub-Category Name (Don't Use &)"
                     required
                     onChange={(e) => setSubCategory(e.target.value)}
                     value={subCategory}

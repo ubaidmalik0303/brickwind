@@ -88,7 +88,15 @@ const UpdateProduct = () => {
       myForm.append("images", image);
     });
 
-    dispatch(updateProduct(id, myForm));
+    if (images[0]) {
+      if (images.length < 2) {
+        alert.error("Please Choose Atleast 2 Images");
+      } else {
+        dispatch(updateProduct(id, myForm));
+      }
+    } else {
+      dispatch(updateProduct(id, myForm));
+    }
   };
 
   useEffect(() => {
