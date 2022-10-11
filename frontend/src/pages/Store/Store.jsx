@@ -20,7 +20,7 @@ import MultiRangeSlider from "multi-range-slider-react";
 
 const Store = () => {
   const dispatch = useDispatch();
-  const { error, loading, products, resultPerPage, productCount } = useSelector(
+  const { error, loading, products, resultPerPage, productCount, filteredProductsCount } = useSelector(
     (state) => state.products
   );
   const {
@@ -39,10 +39,24 @@ const Store = () => {
   const [rating, setrating] = useState(0);
   const [minValue, set_minValue] = useState(0);
   const [maxValue, set_maxValue] = useState(1000);
+
   const handleInput = (e) => {
     set_minValue(e.minValue);
     set_maxValue(e.maxValue);
   };
+
+  const priceFilterHandler = () => {
+    dispatch(
+      getProducts(
+        keyword,
+        currentPage,
+        [minValue, maxValue],
+        category,
+        subcategory,
+        rating
+      )
+    );
+  }
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -70,7 +84,7 @@ const Store = () => {
       )
     );
     dispatch(allCategories());
-  }, [currentPage, category, subcategory, rating, keyword, minValue, maxValue]);
+  }, [currentPage, category, subcategory, rating, keyword]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -94,7 +108,7 @@ const Store = () => {
                 >
                   Price:
                 </span>
-                <div className="py-2">
+                <div className="py-2 d-flex flex-column">
                   <MultiRangeSlider
                     min={0}
                     max={1000}
@@ -108,6 +122,7 @@ const Store = () => {
                       handleInput(e);
                     }}
                   />
+                  <button onClick={priceFilterHandler} className={StoreStyles.priceFilterButton}>Filter</button>
                 </div>
               </div>
               <div>
@@ -152,7 +167,7 @@ const Store = () => {
                 })
               )}
             </div>
-            {resultPerPage < productCount && (
+            {resultPerPage < filteredProductsCount && (
               <div className="container">
                 <div className={StoreStyles.paginationcontainer}>
                   <Pagination

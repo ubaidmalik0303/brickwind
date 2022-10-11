@@ -43,6 +43,18 @@
   margin: 6vmax;
 }
 
+.priceFilterButton{
+  font-family: "Poppins", sans-serif;
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  margin-left: auto;
+  margin-top: 5px;
+  text-align: center;
+}
+
 /* .pagination{
   display: flex;
   justify-content: center;
