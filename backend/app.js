@@ -6,9 +6,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 
-const dotenv = require("dotenv");
-//Config
-dotenv.config({ path: "backend/config/config.env" });
+// Config
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 app.use(cors());
 app.use("/images", express.static("uploads"));
@@ -38,6 +39,12 @@ app.use("/api/v1", categoryRoute);
 app.use("/api/v1", paymentRoute);
 app.use("/api/v1", websiteRoute);
 app.use("/api/v1", contactRoute);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
 
 //Middleware For Error
 app.use(errorMiddleware);
