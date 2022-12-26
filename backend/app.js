@@ -5,6 +5,7 @@ const errorMiddleware = require("./middleware/error");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const path = require("path");
 
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
