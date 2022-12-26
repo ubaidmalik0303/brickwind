@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://brickwind.herokuapp.com",
+  baseURL: "https://joyous-hare-pullover.cyclic.app",
 });
