@@ -7,7 +7,7 @@ const Breadcrumb = ({ breadcrumbpath, name, auth }) => {
   return (
     <>
       <div
-        className="container-fluid border-bottom"
+        className="container-fluid border-bottom bg-primary"
         style={{ height: 80 }}
       ></div>
       <div className={`container-fluid ${BreadcrumbStyles.breadcrumb}`}>
