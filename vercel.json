@@ -2,8 +2,8 @@
   "version": 2,
   "name": "dapp_backend",
   "builds": [
-    { "src": "backend/server.js", "use": "@vercel/node" },
-    { "src": "client/package.json", "use": "npm run build" }
+    { "src": "frontend/package.json", "use": "npm run build" },
+    { "src": "backend/server.js", "use": "@vercel/node" }
   ],
   "routes": [{ "src": "/(.*)", "dest": "backend/server.js" }]
 }
